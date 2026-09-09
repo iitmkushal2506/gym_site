@@ -12,13 +12,13 @@
   </div>
 </section>
 
-<!-- Category Filter -->
-<section class="py-4 border-bottom border-secondary border-opacity-25" style="background-color: var(--bg-surface);">
+<!-- Category Filter (Mobile Scrollable) -->
+<section class="py-3 border-bottom border-secondary border-opacity-25" style="background-color: var(--bg-surface);">
   <div class="container">
-    <div class="d-flex flex-wrap gap-2 justify-content-center">
-      <button class="facility-filter-btn btn-primary-glow btn-sm" data-category="ALL">All Zones</button>
+    <div class="d-flex flex-nowrap overflow-x-auto gap-2 py-2" style="-webkit-overflow-scrolling: touch; scrollbar-width: none;">
+      <button class="facility-filter-btn btn-primary-glow btn-sm flex-shrink-0 px-3" data-category="ALL">All Zones</button>
       {% for cat in categories %}
-      <button class="facility-filter-btn btn-outline-glass btn-sm" data-category="{{ cat }}">{{ cat }}</button>
+      <button class="facility-filter-btn btn-outline-glass btn-sm flex-shrink-0 px-3" data-category="{{ cat }}">{{ cat }}</button>
       {% endfor %}
     </div>
   </div>
