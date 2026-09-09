@@ -6,7 +6,7 @@ load_dotenv(os.path.join(basedir, '.env'))
 
 class Config:
     """Base application configuration."""
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'ironforge-fitness-ultra-secret-key-2026-production')
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'kushal-gym-site-default-demo-secret-key-2026')
     
     # Database URL handling with PostgreSQL and SQLite fallback
     raw_db_url = os.environ.get('DATABASE_URL')
@@ -55,8 +55,8 @@ class DevelopmentConfig(Config):
 class ProductionConfig(Config):
     """Production configuration."""
     DEBUG = False
-    SESSION_COOKIE_SECURE = True
-    REMEMBER_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = False
+    REMEMBER_COOKIE_SECURE = False
     SESSION_COOKIE_HTTPONLY = True
 
 
