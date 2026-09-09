@@ -1,0 +1,137 @@
+{% extends "admin/base_admin.html" %}
+
+{% block page_title %}Class Timetable & Schedule Management{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+  <!-- Class Editor Form -->
+  <div class="col-lg-4">
+    <div class="admin-table-card p-4">
+      <h6 class="fw-bold text-white mb-3">
+        {% if action == 'edit' %}
+        <i class="bi bi-pencil-square text-warning me-2"></i> Edit Class: {{ editing_class.name }}
+        {% else %}
+        <i class="bi bi-calendar-plus-fill text-accent me-2"></i> Add Class to Timetable
+        {% endif %}
+      </h6>
+
+      {% if form %}
+      <form method="POST" action="" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.name.label.text }} *</label>
+          {{ form.name(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="HIIT Bootcamp") }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.trainer_id.label.text }}</label>
+          {{ form.trainer_id(class="form-select bg-dark border-secondary border-opacity-25 text-white") }}
+        </div>
+
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.day.label.text }} *</label>
+            {{ form.day(class="form-select bg-dark border-secondary border-opacity-25 text-white") }}
+          </div>
+          <div class="col-6">
+            <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.capacity.label.text }} *</label>
+            {{ form.capacity(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="20") }}
+          </div>
+        </div>
+
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.start_time.label.text }} *</label>
+            {{ form.start_time(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="06:00 AM") }}
+          </div>
+          <div class="col-6">
+            <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.end_time.label.text }} *</label>
+            {{ form.end_time(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="07:00 AM") }}
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.description.label.text }}</label>
+          {{ form.description(class="form-control bg-dark border-secondary border-opacity-25 text-white", rows=3, placeholder="Class intensity, equipment used...") }}
+        </div>
+
+        <div class="form-check form-switch mb-4">
+          {{ form.is_active(class="form-check-input") }}
+          <label class="form-check-label text-white small" for="{{ form.is_active.id }}">{{ form.is_active.label.text }}</label>
+        </div>
+
+        <div class="d-flex gap-2">
+          {{ form.submit(class="btn btn-danger btn-sm w-100 py-2") }}
+          {% if action == 'edit' %}
+          <a href="{{ url_for('admin.classes') }}" class="btn btn-secondary btn-sm">Cancel</a>
+          {% endif %}
+        </div>
+      </form>
+      {% else %}
+      <a href="{{ url_for('admin.create_class') }}" class="btn btn-primary-glow btn-sm w-100">
+        <i class="bi bi-calendar-plus"></i> Add New Class
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Classes Timetable List -->
+  <div class="col-lg-8">
+    <div class="admin-table-card">
+      <div class="admin-table-header">
+        <h6 class="mb-0 fw-bold text-white"><i class="bi bi-clock-history text-accent me-2"></i> Timetable Sessions ({{ classes|length }})</h6>
+        {% if action != 'create' %}
+        <a href="{{ url_for('admin.create_class') }}" class="btn btn-danger btn-sm">
+          <i class="bi bi-plus-lg me-1"></i> Add Session
+        </a>
+        {% endif %}
+      </div>
+
+      <div class="table-responsive">
+        <table class="table-custom">
+          <thead>
+            <tr>
+              <th>Class Title</th>
+              <th>Day & Time</th>
+              <th>Coach</th>
+              <th>Cap</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for c in classes %}
+            <tr>
+              <td>
+                <strong class="text-white d-block">{{ c.name }}</strong>
+                <small class="text-muted">{{ c.description|truncate(40) if c.description else 'Full-body workout' }}</small>
+              </td>
+              <td>
+                <span class="badge bg-danger bg-opacity-25 text-danger small mb-1">{{ c.day }}</span>
+                <div class="small text-white"><i class="bi bi-clock"></i> {{ c.start_time }} – {{ c.end_time }}</div>
+              </td>
+              <td>
+                <span class="text-secondary small">{{ c.trainer.name if c.trainer else 'Open Floor' }}</span>
+              </td>
+              <td><span class="badge bg-dark border border-secondary border-opacity-25 text-white">{{ c.capacity }}</span></td>
+              <td class="text-end">
+                <a href="{{ url_for('admin.edit_class', id=c.id) }}" class="btn btn-outline-warning btn-sm me-1" title="Edit Class">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <button class="btn btn-outline-danger btn-sm btn-delete-trigger" data-action="{{ url_for('admin.delete_class', id=c.id) }}" data-name="Class: {{ c.name }} ({{ c.day }})">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="5" class="text-center text-muted py-5">No classes scheduled in timetable.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

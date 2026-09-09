@@ -1,0 +1,123 @@
+{% extends "admin/base_admin.html" %}
+
+{% block page_title %}Facility Zones & Equipment Management{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+  <!-- Facility Form -->
+  <div class="col-lg-4">
+    <div class="admin-table-card p-4">
+      <h6 class="fw-bold text-white mb-3">
+        {% if action == 'edit' %}
+        <i class="bi bi-pencil-square text-warning me-2"></i> Edit Facility: {{ editing_facility.name }}
+        {% else %}
+        <i class="bi bi-building-add text-accent me-2"></i> Add New Facility Zone
+        {% endif %}
+      </h6>
+
+      {% if form %}
+      <form method="POST" action="" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.name.label.text }} *</label>
+          {{ form.name(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="Strength & Powerlifting Area") }}
+        </div>
+
+        <div class="row g-2 mb-3">
+          <div class="col-7">
+            <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.category.label.text }} *</label>
+            {{ form.category(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="Strength") }}
+          </div>
+          <div class="col-5">
+            <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.display_order.label.text }} *</label>
+            {{ form.display_order(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="1") }}
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.image_url.label.text }} *</label>
+          {{ form.image_url(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="https://images.unsplash.com/...") }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.description.label.text }}</label>
+          {{ form.description(class="form-control bg-dark border-secondary border-opacity-25 text-white", rows=3, placeholder="Highlights, specs, machines included...") }}
+        </div>
+
+        <div class="form-check form-switch mb-4">
+          {{ form.is_active(class="form-check-input") }}
+          <label class="form-check-label text-white small" for="{{ form.is_active.id }}">{{ form.is_active.label.text }}</label>
+        </div>
+
+        <div class="d-flex gap-2">
+          {{ form.submit(class="btn btn-danger btn-sm w-100 py-2") }}
+          {% if action == 'edit' %}
+          <a href="{{ url_for('admin.facilities') }}" class="btn btn-secondary btn-sm">Cancel</a>
+          {% endif %}
+        </div>
+      </form>
+      {% else %}
+      <a href="{{ url_for('admin.create_facility') }}" class="btn btn-primary-glow btn-sm w-100">
+        <i class="bi bi-plus-circle"></i> Add Facility Zone
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Facilities List -->
+  <div class="col-lg-8">
+    <div class="admin-table-card">
+      <div class="admin-table-header">
+        <h6 class="mb-0 fw-bold text-white"><i class="bi bi-building text-accent me-2"></i> Facility Showroom ({{ facilities|length }})</h6>
+        {% if action != 'create' %}
+        <a href="{{ url_for('admin.create_facility') }}" class="btn btn-danger btn-sm">
+          <i class="bi bi-plus-lg me-1"></i> New Zone
+        </a>
+        {% endif %}
+      </div>
+
+      <div class="table-responsive">
+        <table class="table-custom">
+          <thead>
+            <tr>
+              <th>Preview</th>
+              <th>Zone / Name</th>
+              <th>Category</th>
+              <th>Order</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for f in facilities %}
+            <tr>
+              <td>
+                <img src="{{ f.image_url }}" alt="{{ f.name }}" class="rounded-3" style="width: 60px; height: 42px; object-fit: cover;">
+              </td>
+              <td>
+                <strong class="text-white d-block">{{ f.name }}</strong>
+                <small class="text-muted">{{ f.description|truncate(40) if f.description else '' }}</small>
+              </td>
+              <td><span class="badge bg-danger bg-opacity-25 text-danger">{{ f.category }}</span></td>
+              <td><span class="text-secondary small">{{ f.display_order }}</span></td>
+              <td class="text-end">
+                <a href="{{ url_for('admin.edit_facility', id=f.id) }}" class="btn btn-outline-warning btn-sm me-1" title="Edit Facility">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <button class="btn btn-outline-danger btn-sm btn-delete-trigger" data-action="{{ url_for('admin.delete_facility', id=f.id) }}" data-name="Facility: {{ f.name }}">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="5" class="text-center text-muted py-5">No facility zones created yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

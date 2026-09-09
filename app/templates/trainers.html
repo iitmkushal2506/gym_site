@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Elite Coaches & Personal Trainers | {{ gym_name }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-5 mt-5" style="background: radial-gradient(circle at 50% 0%, rgba(255, 42, 95, 0.12) 0%, transparent 60%), var(--bg-surface);">
+  <div class="container py-4 text-center">
+    <div class="badge-tag mb-2">MASTER COACHES</div>
+    <h1 class="display-4 fw-bold">MEET OUR <span class="text-gradient">EXPERT TRAINERS</span></h1>
+    <p class="section-subtitle">Certified elite performance coaches dedicated to engineering your strength, athletic mobility, and physique transformation.</p>
+  </div>
+</section>
+
+<!-- Trainers Grid & Specialization Filters -->
+<section class="py-5 my-4">
+  <div class="container">
+    <div class="row g-4">
+      {% for trainer in trainers %}
+      <div class="col-lg-4 col-md-6">
+        <div class="trainer-card">
+          <div class="trainer-img-wrap" style="height: 400px;">
+            <img src="{{ trainer.image_url }}" alt="{{ trainer.name }}">
+            <div class="trainer-overlay">
+              <span class="badge bg-danger mb-1 align-self-start">{{ trainer.specialization }}</span>
+              <h3 class="h4 mb-0 text-white">{{ trainer.name }}</h3>
+              <small class="text-secondary">{{ trainer.experience or 'Elite Performance Coach' }}</small>
+            </div>
+          </div>
+          <div class="trainer-info">
+            <p class="text-secondary small mb-3 line-clamp-2">{{ trainer.bio or 'Dedicated strength and physique coach.' }}</p>
+
+            {% if trainer.cert_list %}
+            <div class="mb-3">
+              <small class="text-muted text-uppercase fw-bold" style="font-size: 0.72rem;">Certifications:</small>
+              <div class="d-flex flex-wrap gap-1 mt-1">
+                {% for cert in trainer.cert_list[:3] %}
+                <span class="badge bg-dark border border-secondary border-opacity-25 text-secondary small">{{ cert }}</span>
+                {% endfor %}
+              </div>
+            </div>
+            {% endif %}
+
+            <div class="d-flex gap-2">
+              <a href="{{ url_for('main.trainer_detail', slug=trainer.slug) }}" class="btn-outline-glass btn-sm w-50 text-center">
+                Profile
+              </a>
+              <a href="{{ url_for('booking.book_consultation', trainer=trainer.slug) }}" class="btn-primary-glow btn-sm w-50 text-center">
+                Book Coach
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

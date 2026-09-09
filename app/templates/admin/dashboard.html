@@ -1,0 +1,206 @@
+{% extends "admin/base_admin.html" %}
+
+{% block page_title %}Executive Analytics & Overview{% endblock %}
+
+{% block content %}
+<!-- Top KPI Cards Grid -->
+<div class="row g-3 mb-4">
+  <div class="col-xl-3 col-sm-6">
+    <div class="kpi-card">
+      <div>
+        <div class="kpi-label">TOTAL LEADS</div>
+        <div class="kpi-value text-white">{{ total_leads }}</div>
+        <small class="text-accent fw-bold"><i class="bi bi-arrow-up-right"></i> All Channels</small>
+      </div>
+      <div class="kpi-icon bg-primary bg-opacity-25 text-primary">
+        <i class="bi bi-funnel-fill"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-3 col-sm-6">
+    <div class="kpi-card">
+      <div>
+        <div class="kpi-label">ACTION REQUIRED</div>
+        <div class="kpi-value text-warning">{{ new_leads }}</div>
+        <small class="text-muted">Unprocessed Inquiries</small>
+      </div>
+      <div class="kpi-icon bg-warning bg-opacity-25 text-warning">
+        <i class="bi bi-bell-fill"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-3 col-sm-6">
+    <div class="kpi-card">
+      <div>
+        <div class="kpi-label">FREE TRIALS</div>
+        <div class="kpi-value text-white">{{ trial_count }}</div>
+        <small class="text-info fw-bold">{{ new_trials }} New Requests</small>
+      </div>
+      <div class="kpi-icon bg-info bg-opacity-25 text-info">
+        <i class="bi bi-fire"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-3 col-sm-6">
+    <div class="kpi-card">
+      <div>
+        <div class="kpi-label">PENDING SESSIONS</div>
+        <div class="kpi-value text-accent">{{ pending_appointments }}</div>
+        <small class="text-muted">{{ confirmed_appointments }} Confirmed</small>
+      </div>
+      <div class="kpi-icon bg-danger bg-opacity-25 text-danger">
+        <i class="bi bi-calendar2-check-fill"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Secondary Stats Bar -->
+<div class="row g-3 mb-4">
+  <div class="col-md-3 col-6">
+    <div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+      <div>
+        <span class="text-muted small">Roster Coaches</span>
+        <h5 class="mb-0 text-white fw-bold">{{ trainer_count }} Active</h5>
+      </div>
+      <a href="{{ url_for('admin.trainers') }}" class="text-accent small fw-bold">Manage <i class="bi bi-chevron-right"></i></a>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-6">
+    <div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+      <div>
+        <span class="text-muted small">Membership Plans</span>
+        <h5 class="mb-0 text-white fw-bold">{{ plan_count }} Published</h5>
+      </div>
+      <a href="{{ url_for('admin.memberships') }}" class="text-accent small fw-bold">Manage <i class="bi bi-chevron-right"></i></a>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-6">
+    <div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+      <div>
+        <span class="text-muted small">Timetable Classes</span>
+        <h5 class="mb-0 text-white fw-bold">{{ class_count }} Scheduled</h5>
+      </div>
+      <a href="{{ url_for('admin.classes') }}" class="text-accent small fw-bold">Manage <i class="bi bi-chevron-right"></i></a>
+    </div>
+  </div>
+
+  <div class="col-md-3 col-6">
+    <div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+      <div>
+        <span class="text-muted small">Instagram Reels</span>
+        <h5 class="mb-0 text-white fw-bold">{{ reels_count }} Live</h5>
+      </div>
+      <a href="{{ url_for('admin.instagram') }}" class="text-accent small fw-bold">Manage <i class="bi bi-chevron-right"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Action Shortcuts -->
+<div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 mb-4 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+  <div class="fw-bold text-white small text-uppercase"><i class="bi bi-lightning-fill text-warning me-1"></i> Quick Shortcuts:</div>
+  <div class="d-flex flex-wrap gap-2">
+    <a href="{{ url_for('admin.leads') }}" class="btn btn-outline-light btn-sm"><i class="bi bi-funnel me-1"></i> View Lead Pipeline</a>
+    <a href="{{ url_for('admin.create_membership') }}" class="btn btn-outline-light btn-sm"><i class="bi bi-plus-circle me-1"></i> Add Plan</a>
+    <a href="{{ url_for('admin.create_trainer') }}" class="btn btn-outline-light btn-sm"><i class="bi bi-person-plus me-1"></i> Add Trainer</a>
+    <a href="{{ url_for('admin.create_class') }}" class="btn btn-outline-light btn-sm"><i class="bi bi-calendar-plus me-1"></i> Add Class</a>
+    <a href="{{ url_for('admin.create_reel') }}" class="btn btn-outline-light btn-sm"><i class="bi bi-camera-reels me-1"></i> Add Reel</a>
+  </div>
+</div>
+
+<!-- Recent Leads & Appointments Tables -->
+<div class="row g-4">
+  <!-- Recent Trial Requests -->
+  <div class="col-lg-6">
+    <div class="admin-table-card">
+      <div class="admin-table-header">
+        <h6 class="mb-0 fw-bold text-white"><i class="bi bi-fire text-danger me-2"></i> Recent Free Trial Passes</h6>
+        <a href="{{ url_for('admin.trials') }}" class="small text-accent fw-bold">View All</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table-custom">
+          <thead>
+            <tr>
+              <th>Athlete</th>
+              <th>Goal</th>
+              <th>Date / Slot</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for t in recent_trials %}
+            <tr>
+              <td>
+                <strong class="text-white d-block">{{ t.name }}</strong>
+                <small class="text-muted">{{ t.phone }}</small>
+              </td>
+              <td><span class="badge bg-dark border border-secondary border-opacity-25 text-secondary">{{ t.fitness_goal }}</span></td>
+              <td>
+                <div class="small text-white">{{ t.preferred_date }}</div>
+                <small class="text-muted">{{ t.preferred_time }}</small>
+              </td>
+              <td>
+                <span class="badge-status status-{{ t.status.lower() }}">{{ t.status }}</span>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="4" class="text-center text-muted py-4">No trial requests logged yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Consultation Appointments -->
+  <div class="col-lg-6">
+    <div class="admin-table-card">
+      <div class="admin-table-header">
+        <h6 class="mb-0 fw-bold text-white"><i class="bi bi-calendar-check text-warning me-2"></i> Recent PT Consultations</h6>
+        <a href="{{ url_for('admin.appointments') }}" class="small text-accent fw-bold">View All</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table-custom">
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Assigned Coach</th>
+              <th>Target Slot</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for c in recent_consultations %}
+            <tr>
+              <td>
+                <strong class="text-white d-block">{{ c.name }}</strong>
+                <small class="text-muted">{{ c.phone }}</small>
+              </td>
+              <td><span class="text-accent fw-bold">{{ c.trainer.name if c.trainer else 'Coach' }}</span></td>
+              <td>
+                <div class="small text-white">{{ c.preferred_date }}</div>
+                <small class="text-muted">{{ c.preferred_time }}</small>
+              </td>
+              <td>
+                <span class="badge-status status-{{ c.status.lower() }}">{{ c.status }}</span>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="4" class="text-center text-muted py-4">No consultation appointments logged yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

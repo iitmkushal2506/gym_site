@@ -1,0 +1,252 @@
+/* ==========================================================================
+   IRONFORGE FITNESS - ADMIN DASHBOARD DESIGN SYSTEM
+   ========================================================================== */
+
+:root {
+  --admin-bg: #0B0E14;
+  --admin-sidebar: #111520;
+  --admin-card: #161B26;
+  --admin-card-hover: #1C2230;
+  --admin-border: rgba(255, 255, 255, 0.07);
+  --admin-accent: #FF2A5F;
+  --admin-accent-glow: rgba(255, 42, 95, 0.25);
+  --admin-text-primary: #FFFFFF;
+  --admin-text-secondary: #94A3B8;
+  --admin-text-muted: #64748B;
+  --admin-sidebar-width: 260px;
+}
+
+body.admin-body {
+  background-color: var(--admin-bg);
+  color: var(--admin-text-primary);
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.admin-sidebar {
+  width: var(--admin-sidebar-width);
+  background-color: var(--admin-sidebar);
+  border-right: 1px solid var(--admin-border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1020;
+  transition: all 0.3s ease;
+}
+
+.sidebar-header {
+  padding: 24px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.sidebar-nav {
+  padding: 20px 12px;
+  flex-grow: 1;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  margin-bottom: 4px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: var(--admin-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.sidebar-link:hover, .sidebar-link.active {
+  background: rgba(255, 42, 95, 0.12);
+  color: #FFFFFF;
+}
+
+.sidebar-link.active {
+  color: var(--admin-accent);
+  font-weight: 600;
+}
+
+.sidebar-link i {
+  font-size: 1.15rem;
+  width: 22px;
+}
+
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--admin-border);
+}
+
+/* Main Content Area */
+.admin-main {
+  margin-left: var(--admin-sidebar-width);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: calc(100% - var(--admin-sidebar-width));
+}
+
+.admin-topbar {
+  height: 68px;
+  background: var(--admin-sidebar);
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.admin-content {
+  padding: 30px 28px;
+  flex-grow: 1;
+}
+
+/* KPI Cards */
+.kpi-card {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  padding: 22px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+}
+
+.kpi-card:hover {
+  background: var(--admin-card-hover);
+  border-color: rgba(255, 42, 95, 0.3);
+  transform: translateY(-2px);
+}
+
+.kpi-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.kpi-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.kpi-label {
+  font-size: 0.8rem;
+  color: var(--admin-text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Tables */
+.admin-table-card {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.admin-table-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--admin-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.table-custom {
+  width: 100%;
+  margin: 0;
+  color: var(--admin-text-primary);
+  border-collapse: collapse;
+}
+
+.table-custom th {
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--admin-text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.table-custom td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--admin-border);
+  vertical-align: middle;
+  font-size: 0.9rem;
+}
+
+.table-custom tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Status Badges */
+.badge-status {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.status-new { background: rgba(59, 130, 246, 0.15); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.3); }
+.status-pending { background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.3); }
+.status-confirmed, .status-converted { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
+.status-cancelled, .status-closed { background: rgba(239, 68, 68, 0.15); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+.status-contacted, .status-in_progress { background: rgba(168, 85, 247, 0.15); color: #C084FC; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+/* Modals */
+.modal-content.admin-modal {
+  background: var(--admin-card);
+  color: #FFFFFF;
+  border: 1px solid var(--admin-border);
+  border-radius: 14px;
+}
+
+.modal-content.admin-modal .modal-header,
+.modal-content.admin-modal .modal-footer {
+  border-color: var(--admin-border);
+}
+
+@media (max-width: 991px) {
+  .admin-sidebar {
+    transform: translateX(-100%);
+  }
+  .admin-sidebar.show {
+    transform: translateX(0);
+  }
+  .admin-main {
+    margin-left: 0;
+    width: 100%;
+  }
+}

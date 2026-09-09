@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Member Transformations & Success Stories | {{ gym_name }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-5 mt-5" style="background: radial-gradient(circle at 50% 0%, rgba(255, 42, 95, 0.12) 0%, transparent 60%), var(--bg-surface);">
+  <div class="container py-4 text-center">
+    <div class="badge-tag mb-2">PROVEN RESULTS</div>
+    <h1 class="display-4 fw-bold">TRANSFORMATION <span class="text-gradient">SHOWCASE</span></h1>
+    <p class="section-subtitle">Real athletes, disciplined training programs, and undeniable physique transformations.</p>
+  </div>
+</section>
+
+<!-- Transformations Grid -->
+<section class="py-5 my-4">
+  <div class="container">
+    <div class="row g-4">
+      {% for t in transformations %}
+      <div class="col-lg-6">
+        <div class="transformation-card">
+          <div class="compare-grid" style="height: 280px;">
+            <div class="compare-box">
+              <span class="compare-label">BEFORE</span>
+              <img src="{{ t.before_image }}" alt="{{ t.client_name }} Before">
+            </div>
+            <div class="compare-box">
+              <span class="compare-label" style="background: var(--accent-primary);">AFTER</span>
+              <img src="{{ t.after_image }}" alt="{{ t.client_name }} After">
+            </div>
+          </div>
+          <div class="transformation-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h3 class="h4 mb-0 text-white">{{ t.client_name }}</h3>
+              <span class="badge bg-danger">{{ t.duration }}</span>
+            </div>
+            <h4 class="text-accent fw-bold h5 mb-3">{{ t.achievement }}</h4>
+            <p class="text-secondary mb-4">{{ t.story }}</p>
+            <a href="{{ url_for('booking.book_consultation') }}" class="btn-primary-glow btn-sm w-100 text-center">
+              Start Your Own Transformation
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

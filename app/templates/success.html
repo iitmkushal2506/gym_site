@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Booking Request Received | {{ gym_name }}{% endblock %}
+
+{% block content %}
+<section class="py-5 mt-5 d-flex align-items-center" style="min-height: 80vh;">
+  <div class="container py-5 text-center">
+    <div class="mx-auto p-5 rounded-4 shadow-lg border border-secondary border-opacity-25" style="max-width: 620px; background-color: var(--bg-surface);">
+      <div class="mb-4">
+        <div class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width: 80px; height: 80px; background: rgba(16, 185, 129, 0.15); color: #10B981;">
+          <i class="bi bi-check-lg display-4"></i>
+        </div>
+      </div>
+
+      <h1 class="h2 fw-bold text-white mb-2">
+        {% if booking_type == 'trial' %}
+        VIP TRIAL PASS CONFIRMED!
+        {% elif booking_type == 'consultation' %}
+        CONSULTATION REQUEST SUBMITTED!
+        {% else %}
+        REQUEST RECEIVED!
+        {% endif %}
+      </h1>
+
+      <p class="text-secondary mb-4">
+        Thank you, <strong class="text-white">{{ name }}</strong>! We have logged your request in our system. A confirmation notification has been sent to your email.
+      </p>
+
+      {% if date or slot or trainer %}
+      <div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 text-start small mb-4">
+        {% if trainer %}
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted">Coach / Trainer:</span>
+          <strong class="text-white">{{ trainer }}</strong>
+        </div>
+        {% endif %}
+        {% if date %}
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted">Requested Date:</span>
+          <strong class="text-white">{{ date }}</strong>
+        </div>
+        {% endif %}
+        {% if slot %}
+        <div class="d-flex justify-content-between mb-2">
+          <span class="text-muted">Time Slot:</span>
+          <strong class="text-white">{{ slot }}</strong>
+        </div>
+        {% endif %}
+        <div class="d-flex justify-content-between">
+          <span class="text-muted">Status:</span>
+          <span class="badge {% if booking_type == 'trial' %}bg-success{% else %}bg-warning text-dark{% endif %}">
+            {% if booking_type == 'trial' %}PASS ACTIVE{% else %}PENDING STAFF REVIEW{% endif %}
+          </span>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+        <a href="https://wa.me/{{ gym_whatsapp }}?text=Hi,%20I%20just%20booked%20my%20session%20({{ name }})%20on%20the%20website!" target="_blank" rel="noopener" class="btn btn-success py-2 px-4 fw-bold">
+          <i class="bi bi-whatsapp"></i> Chat on WhatsApp
+        </a>
+        <a href="{{ url_for('main.home') }}" class="btn-outline-glass py-2 px-4">
+          Return to Homepage
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

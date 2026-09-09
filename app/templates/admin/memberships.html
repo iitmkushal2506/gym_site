@@ -1,0 +1,136 @@
+{% extends "admin/base_admin.html" %}
+
+{% block page_title %}Membership Plans Management{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+  <!-- Plan Editor Form -->
+  <div class="col-lg-4">
+    <div class="admin-table-card p-4">
+      <h6 class="fw-bold text-white mb-3">
+        {% if action == 'edit' %}
+        <i class="bi bi-pencil-square text-warning me-2"></i> Edit Plan: {{ editing_plan.name }}
+        {% else %}
+        <i class="bi bi-plus-circle-fill text-accent me-2"></i> Create Membership Plan
+        {% endif %}
+      </h6>
+
+      {% if form %}
+      <form method="POST" action="" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.name.label.text }} *</label>
+          {{ form.name(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="PREMIUM PLAN") }}
+        </div>
+
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.price.label.text }} *</label>
+            {{ form.price(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="2499") }}
+          </div>
+          <div class="col-6">
+            <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.duration.label.text }} *</label>
+            {{ form.duration(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="month") }}
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.description.label.text }}</label>
+          {{ form.description(class="form-control bg-dark border-secondary border-opacity-25 text-white", rows=2, placeholder="Summary tag") }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.features.label.text }} *</label>
+          {{ form.features(class="form-control bg-dark border-secondary border-opacity-25 text-white", rows=5, placeholder="Full gym access&#10;Group classes included&#10;Diet consultation") }}
+          <small class="text-muted" style="font-size: 0.72rem;">Enter each feature on a new line.</small>
+        </div>
+
+        <div class="form-check form-switch mb-2">
+          {{ form.featured(class="form-check-input") }}
+          <label class="form-check-label text-white small" for="{{ form.featured.id }}">{{ form.featured.label.text }}</label>
+        </div>
+
+        <div class="form-check form-switch mb-4">
+          {{ form.is_active(class="form-check-input") }}
+          <label class="form-check-label text-white small" for="{{ form.is_active.id }}">{{ form.is_active.label.text }}</label>
+        </div>
+
+        <div class="d-flex gap-2">
+          {{ form.submit(class="btn btn-danger btn-sm w-100 py-2") }}
+          {% if action == 'edit' %}
+          <a href="{{ url_for('admin.memberships') }}" class="btn btn-secondary btn-sm">Cancel</a>
+          {% endif %}
+        </div>
+      </form>
+      {% else %}
+      <a href="{{ url_for('admin.create_membership') }}" class="btn btn-primary-glow btn-sm w-100">
+        <i class="bi bi-plus-circle"></i> Add New Plan
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Plans List -->
+  <div class="col-lg-8">
+    <div class="admin-table-card">
+      <div class="admin-table-header">
+        <h6 class="mb-0 fw-bold text-white"><i class="bi bi-card-checklist text-accent me-2"></i> Published Plans ({{ plans|length }})</h6>
+        {% if action != 'create' %}
+        <a href="{{ url_for('admin.create_membership') }}" class="btn btn-danger btn-sm">
+          <i class="bi bi-plus-lg me-1"></i> New Plan
+        </a>
+        {% endif %}
+      </div>
+
+      <div class="table-responsive">
+        <table class="table-custom">
+          <thead>
+            <tr>
+              <th>Plan Name</th>
+              <th>Price</th>
+              <th>Features</th>
+              <th>Status</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in plans %}
+            <tr>
+              <td>
+                <strong class="text-white d-block">{{ p.name }}</strong>
+                {% if p.featured %}<span class="badge bg-danger" style="font-size: 0.68rem;"><i class="bi bi-star-fill"></i> POPULAR</span>{% endif %}
+              </td>
+              <td>
+                <span class="text-white fw-bold">₹{{ "{:,.0f}".format(p.price) }}</span>
+                <small class="text-muted">/ {{ p.duration }}</small>
+              </td>
+              <td>
+                <span class="badge bg-dark border border-secondary border-opacity-25 text-secondary">{{ p.feature_list|length }} Items</span>
+              </td>
+              <td>
+                <span class="badge-status {% if p.is_active %}status-confirmed{% else %}status-cancelled{% endif %}">
+                  {{ 'ACTIVE' if p.is_active else 'HIDDEN' }}
+                </span>
+              </td>
+              <td class="text-end">
+                <a href="{{ url_for('admin.edit_membership', id=p.id) }}" class="btn btn-outline-warning btn-sm me-1" title="Edit Plan">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <button class="btn btn-outline-danger btn-sm btn-delete-trigger" data-action="{{ url_for('admin.delete_membership', id=p.id) }}" data-name="Plan: {{ p.name }}">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="5" class="text-center text-muted py-5">No membership plans created yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

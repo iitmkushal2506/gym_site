@@ -1,0 +1,536 @@
+{% extends "base.html" %}
+
+{% block title %}{{ gym_name }} | Build Stronger. Live Stronger.{% endblock %}
+
+{% block content %}
+
+<!-- ====================================================
+     1. HERO SECTION
+     ==================================================== -->
+<section class="hero-section">
+  <div class="hero-bg-overlay" style="background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1920&auto=format&fit=crop');"></div>
+  <div class="hero-gradient-mask"></div>
+
+  <div class="container hero-content">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <div class="badge-tag mb-3">
+          <i class="bi bi-award-fill"></i> #1 ELITE TRAINING FACILITY
+        </div>
+        
+        <h1 class="hero-title">
+          BUILD <span class="text-gradient">STRONGER.</span><br>
+          LIVE STRONGER.
+        </h1>
+
+        <p class="hero-subtext">
+          Premium athletic training, world-class certified coaches, and an unforgiving standard of excellence built to forge your ultimate physique.
+        </p>
+
+        <div class="d-flex flex-wrap gap-3">
+          <a href="{{ url_for('booking.book_trial') }}" class="btn-primary-glow">
+            <i class="bi bi-fire"></i> START FREE TRIAL
+          </a>
+          <a href="{{ url_for('main.membership') }}" class="btn-outline-glass">
+            <i class="bi bi-card-checklist"></i> VIEW MEMBERSHIPS
+          </a>
+        </div>
+
+        <div class="hero-trust">
+          <div class="trust-avatars">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop" alt="Member" class="trust-avatar">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop" alt="Member" class="trust-avatar">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop" alt="Member" class="trust-avatar">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop" alt="Member" class="trust-avatar">
+          </div>
+          <div>
+            <div class="text-warning small">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <span class="text-white fw-bold ms-1">4.9 / 5.0</span>
+            </div>
+            <span>Trusted by 5,000+ dedicated athletes & members</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     2. GYM STATISTICS BAR
+     ==================================================== -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-card">
+      <div class="row g-4 divide-y divide-lg-0">
+        <div class="col-lg-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number">5,000+</div>
+            <div class="stat-label">Active Members</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number">20+</div>
+            <div class="stat-label">Expert Coaches</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Weekly Classes</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     3. ABOUT PREVIEW
+     ==================================================== -->
+<section class="py-5 my-5">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <div class="position-relative">
+          <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=800&auto=format&fit=crop" alt="Ironforge Facility" class="img-fluid rounded-4 shadow-lg border border-secondary border-opacity-25">
+          <div class="position-absolute bottom-0 start-0 m-4 p-3 rounded-3 bg-dark bg-opacity-90 border border-secondary border-opacity-25 backdrop-blur">
+            <div class="d-flex align-items-center gap-3">
+              <div class="text-accent fs-3"><i class="bi bi-shield-fill-check"></i></div>
+              <div>
+                <h6 class="mb-0 fw-bold text-white">Uncompromising Quality</h6>
+                <small class="text-secondary">Hammer Strength & Eleiko Certified</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="badge-tag mb-3">WHO WE ARE</div>
+        <h2 class="section-title">THE SANCTUARY OF <span class="text-gradient">REAL RESULTS.</span></h2>
+        <p class="text-secondary mb-4">
+          At {{ gym_name }}, we reject the cookie-cutter corporate gym formula. We have built an uncompromising iron haven equipped with Olympic-grade machinery, bio-mechanical testing, and elite coaches devoted to your transformation.
+        </p>
+        <p class="text-secondary mb-4">
+          Whether you are preparing for a competitive stage, burning stubborn fat, or building foundational longevity, our proven systems eliminate guesswork.
+        </p>
+        <div class="d-flex gap-3">
+          <a href="{{ url_for('main.about') }}" class="btn-primary-glow">
+            DISCOVER OUR STORY <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     4. WHY CHOOSE US
+     ==================================================== -->
+<section class="py-5" style="background-color: var(--bg-surface);">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="badge-tag mb-2">THE IRONFORGE EDGE</div>
+      <h2 class="section-title">ENGINEERED FOR <span class="text-gradient">PEAK PERFORMANCE</span></h2>
+      <p class="section-subtitle">Everything you need to surpass your limits under one high-octane roof.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="gym-card">
+          <div class="card-icon-box"><i class="bi bi-person-badge-fill"></i></div>
+          <h4 class="h5 mb-2">Expert Trainers</h4>
+          <p class="text-secondary small mb-0">Internationally certified CSCS, NASM, and Olympic lifting specialists who program specifically for your biomechanics.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="gym-card">
+          <div class="card-icon-box"><i class="bi bi-trophy-fill"></i></div>
+          <h4 class="h5 mb-2">Premium Equipment</h4>
+          <p class="text-secondary small mb-0">Loaded with Eleiko barbells, calibrated steel plates, Hammer Strength plate-loaded racks, and precision cardio machines.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="gym-card">
+          <div class="card-icon-box"><i class="bi bi-graph-up-arrow"></i></div>
+          <h4 class="h5 mb-2">Personalized Training</h4>
+          <p class="text-secondary small mb-0">Tailored periodization programs, continuous body-composition tracking, and progressive overload monitoring.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="gym-card">
+          <div class="card-icon-box"><i class="bi bi-people-fill"></i></div>
+          <h4 class="h5 mb-2">Dynamic Group Classes</h4>
+          <p class="text-secondary small mb-0">High-energy HIIT, power boxing, strength circuits, and mobility recovery classes scheduled every morning and evening.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="gym-card">
+          <div class="card-icon-box"><i class="bi bi-calendar2-week-fill"></i></div>
+          <h4 class="h5 mb-2">Flexible Memberships</h4>
+          <p class="text-secondary small mb-0">Transparent month-to-month, quarterly, or annual tiers with zero lock-in contracts or hidden cancellation fees.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="gym-card">
+          <div class="card-icon-box"><i class="bi bi-heart-pulse-fill"></i></div>
+          <h4 class="h5 mb-2">Supportive Community</h4>
+          <p class="text-secondary small mb-0">Train alongside ambitious, focused athletes who celebrate every personal record and keep your drive burning hot.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     5. MEMBERSHIP PREVIEW (Database Driven)
+     ==================================================== -->
+<section class="py-5 my-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="badge-tag mb-2">MEMBERSHIP TIERS</div>
+      <h2 class="section-title">INVEST IN YOUR <span class="text-gradient">GREATEST ASSET</span></h2>
+      <p class="section-subtitle">Select the membership level tailored to accelerate your lifestyle.</p>
+    </div>
+
+    <div class="row g-4 align-items-stretch">
+      {% for plan in plans %}
+      <div class="col-lg-4 col-md-6">
+        <div class="pricing-card {% if plan.featured %}featured{% endif %}">
+          {% if plan.featured %}
+          <div class="pricing-badge"><i class="bi bi-star-fill"></i> MOST POPULAR</div>
+          {% endif %}
+
+          <h3 class="h4 mb-1">{{ plan.name }}</h3>
+          <p class="text-muted small mb-0">{{ plan.description or 'All-inclusive training access' }}</p>
+
+          <div class="pricing-price">
+            <span class="pricing-currency">₹</span>{{ "{:,.0f}".format(plan.price) }}
+            <span class="pricing-period">/ {{ plan.duration }}</span>
+          </div>
+
+          <hr class="border-secondary border-opacity-25 my-4">
+
+          <div class="flex-grow-1 mb-4">
+            {% for f in plan.feature_list %}
+            <div class="feature-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span>{{ f }}</span>
+            </div>
+            {% endfor %}
+          </div>
+
+          <a href="{{ url_for('booking.book_trial') }}" class="{% if plan.featured %}btn-primary-glow{% else %}btn-outline-glass{% endif %} w-100 text-center">
+            GET STARTED NOW
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="{{ url_for('main.membership') }}" class="btn-outline-glass">
+        VIEW ALL MEMBERSHIP PLANS & DETAILS <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     6. TRAINER PREVIEW (Database Driven)
+     ==================================================== -->
+<section class="py-5" style="background-color: var(--bg-surface);">
+  <div class="container">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5">
+      <div>
+        <div class="badge-tag mb-2">MEET THE ELITE</div>
+        <h2 class="section-title mb-0">WORLD-CLASS <span class="text-gradient">COACHES</span></h2>
+      </div>
+      <div class="mt-3 mt-md-0">
+        <a href="{{ url_for('main.trainers') }}" class="btn-outline-glass">
+          MEET ALL TRAINERS <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      {% for trainer in trainers %}
+      <div class="col-lg-3 col-md-6">
+        <div class="trainer-card">
+          <div class="trainer-img-wrap">
+            <img src="{{ trainer.image_url }}" alt="{{ trainer.name }}">
+            <div class="trainer-overlay">
+              <span class="badge bg-danger mb-1 align-self-start">{{ trainer.specialization }}</span>
+              <h4 class="h5 mb-0 text-white">{{ trainer.name }}</h4>
+              <small class="text-secondary">{{ trainer.experience or 'Elite Coach' }}</small>
+            </div>
+          </div>
+          <div class="trainer-info">
+            <p class="text-secondary small mb-3 line-clamp-2">{{ trainer.bio or 'Specialized in peak conditioning and physique sculpting.' }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <a href="{{ url_for('main.trainer_detail', slug=trainer.slug) }}" class="text-accent small fw-bold">
+                VIEW PROFILE <i class="bi bi-chevron-right"></i>
+              </a>
+              {% if trainer.instagram_url %}
+              <a href="{{ trainer.instagram_url }}" target="_blank" rel="noopener" class="text-muted fs-6" aria-label="Instagram">
+                <i class="bi bi-instagram"></i>
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     7. CLASSES PREVIEW (Database Driven)
+     ==================================================== -->
+<section class="py-5 my-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="badge-tag mb-2">WEEKLY SCHEDULE</div>
+      <h2 class="section-title">HIGH-INTENSITY <span class="text-gradient">CLASSES</span></h2>
+      <p class="section-subtitle">Led by master instructors. Burn calories, build endurance, and conquer your thresholds.</p>
+    </div>
+
+    <div class="row g-4">
+      {% for c in classes %}
+      <div class="col-lg-4 col-md-6">
+        <div class="class-slot-card">
+          <div>
+            <span class="badge bg-secondary bg-opacity-25 text-white small mb-1">{{ c.day }}</span>
+            <h4 class="h5 mb-1">{{ c.name }}</h4>
+            <div class="text-secondary small">
+              <i class="bi bi-clock-fill text-accent me-1"></i> {{ c.start_time }} – {{ c.end_time }}
+            </div>
+            {% if c.trainer %}
+            <div class="text-muted small mt-1">
+              <i class="bi bi-person-fill me-1"></i> Coach {{ c.trainer.name }}
+            </div>
+            {% endif %}
+          </div>
+          <div>
+            <a href="{{ url_for('booking.book_trial') }}" class="btn-primary-glow btn-sm py-2 px-3">
+              JOIN
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="{{ url_for('main.classes') }}" class="btn-outline-glass">
+        VIEW COMPLETE WEEKLY TIMETABLE <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     8. FACILITIES SHOWROOM
+     ==================================================== -->
+<section class="py-5" style="background-color: var(--bg-surface);">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="badge-tag mb-2">THE FACILITY</div>
+      <h2 class="section-title">UNPARALLELED <span class="text-gradient">TRAINING SPACES</span></h2>
+      <p class="section-subtitle">Over 20,000 sq.ft. of custom-designed strength zones, recovery suites, and private turf.</p>
+    </div>
+
+    <div class="row g-4">
+      {% for f in facilities %}
+      <div class="col-lg-4 col-md-6">
+        <div class="position-relative rounded-4 overflow-hidden shadow-lg border border-secondary border-opacity-25" style="height: 280px;">
+          <img src="{{ f.image_url }}" alt="{{ f.name }}" class="w-100 h-100 object-fit-cover transition-transform duration-500 hover-scale">
+          <div class="position-absolute inset-0 bg-gradient-dark p-4 d-flex flex-column justify-content-end" style="background: linear-gradient(180deg, transparent 40%, rgba(8,9,12,0.95) 100%);">
+            <span class="badge bg-danger bg-opacity-75 align-self-start mb-1">{{ f.category }}</span>
+            <h4 class="h5 text-white mb-1">{{ f.name }}</h4>
+            <p class="text-secondary small mb-0 line-clamp-1">{{ f.description }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="{{ url_for('main.facilities') }}" class="btn-outline-glass">
+        EXPLORE FULL FACILITY & EQUIPMENT <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     9. TRANSFORMATIONS
+     ==================================================== -->
+<section class="py-5 my-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="badge-tag mb-2">PROVEN RESULTS</div>
+      <h2 class="section-title">REAL PEOPLE. <span class="text-gradient">REAL TRANSFORMATIONS.</span></h2>
+      <p class="section-subtitle">No gimmicks or crash diets. Just science-backed training and consistent dedication.</p>
+    </div>
+
+    <div class="row g-4">
+      {% for t in transformations %}
+      <div class="col-lg-6">
+        <div class="transformation-card">
+          <div class="compare-grid">
+            <div class="compare-box">
+              <span class="compare-label">BEFORE</span>
+              <img src="{{ t.before_image }}" alt="{{ t.client_name }} Before">
+            </div>
+            <div class="compare-box">
+              <span class="compare-label" style="background: var(--accent-primary);">AFTER</span>
+              <img src="{{ t.after_image }}" alt="{{ t.client_name }} After">
+            </div>
+          </div>
+          <div class="transformation-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h4 class="h5 mb-0">{{ t.client_name }}</h4>
+              <span class="badge bg-danger">{{ t.duration }}</span>
+            </div>
+            <h5 class="text-accent fw-bold h6 mb-2">{{ t.achievement }}</h5>
+            <p class="text-secondary small mb-0">{{ t.story }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="{{ url_for('main.transformations') }}" class="btn-outline-glass">
+        SEE MORE SUCCESS STORIES <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     🔥 10. INSTAGRAM / REELS INTERACTIVE SECTION
+     ==================================================== -->
+<section class="reels-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="badge-tag mb-2"><i class="bi bi-camera-reels-fill"></i> INSTAGRAM HIGHLIGHTS</div>
+      <h2 class="section-title">TRAIN WITH US <span class="text-gradient">@IRONFORGEFITNESS</span></h2>
+      <p class="section-subtitle">Follow the journey, daily trainer tips, workout breakdowns, and member PRs.</p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      {% for reel in reels %}
+      <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+        <div class="reel-card"
+             data-title="{{ reel.title }}"
+             data-caption="{{ reel.caption or '' }}"
+             data-video="{{ reel.video_url or '' }}"
+             data-ig-url="{{ reel.instagram_url or gym_instagram }}">
+          <img src="{{ reel.thumbnail_url }}" alt="{{ reel.title }}" class="reel-thumbnail">
+          <div class="reel-overlay">
+            <div class="reel-top">
+              <span class="ig-badge"><i class="bi bi-instagram"></i> Reel</span>
+              <span class="badge bg-dark bg-opacity-75"><i class="bi bi-play-fill"></i> Watch</span>
+            </div>
+
+            <div class="reel-play-btn">
+              <i class="bi bi-play-fill"></i>
+            </div>
+
+            <div>
+              <div class="reel-caption line-clamp-2 mb-1">{{ reel.title }}</div>
+              <small class="text-secondary d-block" style="font-size: 0.72rem;">{{ reel.caption }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="{{ gym_instagram }}" target="_blank" rel="noopener" class="btn-primary-glow">
+        <i class="bi bi-instagram"></i> FOLLOW US ON INSTAGRAM
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     11. TESTIMONIALS
+     ==================================================== -->
+<section class="py-5 my-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="badge-tag mb-2">COMMUNITY VOICES</div>
+      <h2 class="section-title">WHAT OUR <span class="text-gradient">ATHLETES SAY</span></h2>
+      <p class="section-subtitle">Hear firsthand from individuals who transformed their strength and mindset.</p>
+    </div>
+
+    <div class="row g-4">
+      {% for test in testimonials %}
+      <div class="col-lg-4 col-md-6">
+        <div class="gym-card d-flex flex-column justify-content-between">
+          <div>
+            <div class="text-warning mb-3">
+              {% for i in range(test.rating) %}
+              <i class="bi bi-star-fill"></i>
+              {% endfor %}
+            </div>
+            <p class="text-secondary mb-4 fst-italic">"{{ test.review }}"</p>
+          </div>
+          <div class="d-flex align-items-center gap-3 pt-3 border-top border-secondary border-opacity-25">
+            <img src="{{ test.image_url or 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop' }}" alt="{{ test.client_name }}" class="rounded-circle" style="width: 46px; height: 46px; object-fit: cover;">
+            <div>
+              <h6 class="mb-0 fw-bold text-white">{{ test.client_name }}</h6>
+              <small class="text-muted">Verified Member</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================
+     12. FINAL CTA SECTION
+     ==================================================== -->
+<section class="py-5" style="background: radial-gradient(circle at 50% 50%, rgba(255, 42, 95, 0.2) 0%, transparent 70%), var(--bg-primary);">
+  <div class="container text-center py-5">
+    <div class="badge-tag mb-3"><i class="bi bi-lightning-charge-fill"></i> START YOUR EVOLUTION</div>
+    <h2 class="display-4 fw-black mb-3">READY TO BECOME YOUR <span class="text-gradient">STRONGEST SELF?</span></h2>
+    <p class="section-subtitle mb-4">
+      Step into Ironforge Fitness with zero risk. Experience our equipment, coaches, and atmosphere with a complimentary 1-day VIP pass.
+    </p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <a href="{{ url_for('booking.book_trial') }}" class="btn-primary-glow btn-lg px-5 py-3">
+        <i class="bi bi-fire"></i> BOOK YOUR FREE TRIAL
+      </a>
+      <a href="{{ url_for('booking.book_consultation') }}" class="btn-outline-glass btn-lg px-5 py-3">
+        <i class="bi bi-calendar2-check"></i> BOOK COACH CONSULTATION
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

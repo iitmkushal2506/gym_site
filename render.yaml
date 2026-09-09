@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: ironforge-fitness
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn run:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ironforge-db
+          property: connectionString
+      - key: GYM_NAME
+        value: IRONFORGE FITNESS
+      - key: GYM_TAGLINE
+        value: BUILD STRONGER. LIVE STRONGER.
+      - key: GYM_PHONE
+        value: "+91 98765 43210"
+      - key: GYM_EMAIL
+        value: info@ironforgefitness.com
+      - key: GYM_WHATSAPP
+        value: "919876543210"
+
+databases:
+  - name: ironforge-db
+    databaseName: ironforge
+    user: ironforge_user
+    plan: free

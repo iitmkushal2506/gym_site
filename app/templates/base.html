@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ gym_name }} | Premium Elite Fitness Club{% endblock %}</title>
+  
+  <!-- SEO & OpenGraph Metadata -->
+  <meta name="description" content="{% block meta_description %}Experience world-class fitness at {{ gym_name }}. Elite coaches, cutting-edge strength equipment, dynamic group classes, and personalized nutrition plans.{% endblock %}">
+  <meta name="keywords" content="gym, fitness, personal trainer, strength training, HIIT, crossfit, bodybuilding, weight loss, ironforge fitness">
+  <meta property="og:title" content="{% block og_title %}{{ gym_name }} | {{ gym_tagline }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}Transform your body and mind with elite personal trainers and luxury gym facilities.{% endblock %}">
+  <meta property="og:type" content="website">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FF2A5F'/><path d='M30 70 L50 30 L70 70' stroke='white' stroke-width='10' stroke-linecap='round' fill='none'/><path d='M38 56 L62 56' stroke='white' stroke-width='8'/></svg>">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Custom Core Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  
+  {% block extra_css %}{% endblock %}
+
+  <!-- Google Analytics Support -->
+  {% if ga_tracking_id %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga_tracking_id }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ ga_tracking_id }}');
+  </script>
+  {% endif %}
+</head>
+<body>
+
+  <!-- ====================================================
+       1. MAIN NAVBAR
+       ==================================================== -->
+  <nav class="navbar navbar-expand-lg main-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('main.home') }}">
+        <div class="brand-icon">
+          <i class="bi bi-lightning-charge-fill"></i>
+        </div>
+        <span>{{ gym_name }}</span>
+      </a>
+
+      <button class="navbar-toggler text-white border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bi bi-list fs-1 text-white"></i>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'main.home' %}active{% endif %}" href="{{ url_for('main.home') }}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'main.about' %}active{% endif %}" href="{{ url_for('main.about') }}">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'main.membership' %}active{% endif %}" href="{{ url_for('main.membership') }}">Membership</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint in ['main.trainers', 'main.trainer_detail'] %}active{% endif %}" href="{{ url_for('main.trainers') }}">Trainers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'main.classes' %}active{% endif %}" href="{{ url_for('main.classes') }}">Classes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'main.facilities' %}active{% endif %}" href="{{ url_for('main.facilities') }}">Facilities</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'main.transformations' %}active{% endif %}" href="{{ url_for('main.transformations') }}">Transformations</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'contact.contact' %}active{% endif %}" href="{{ url_for('contact.contact') }}">Contact</a>
+          </li>
+        </ul>
+
+        <div class="d-flex align-items-center gap-3">
+          <a href="{{ url_for('booking.book_trial') }}" class="btn-primary-glow btn-sm">
+            <i class="bi bi-fire"></i> START FREE TRIAL
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ====================================================
+       FLASH NOTIFICATIONS
+       ==================================================== -->
+  <div class="container position-fixed top-0 start-50 translate-middle-x mt-5 pt-4" style="z-index: 2000; max-width: 600px;">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category if category != 'error' else 'danger' }} alert-dismissible fade show shadow-lg border-0 bg-dark text-white border-start border-4 border-{{ category if category != 'error' else 'danger' }}" role="alert">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi {% if category == 'success' %}bi-check-circle-fill text-success{% elif category == 'warning' %}bi-exclamation-triangle-fill text-warning{% else %}bi-info-circle-fill text-info{% endif %} fs-5"></i>
+              <div>{{ message }}</div>
+            </div>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <!-- ====================================================
+       MAIN PAGE CONTENT
+       ==================================================== -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ====================================================
+       FOOTER
+       ==================================================== -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4 col-md-6">
+          <a class="navbar-brand mb-3 d-inline-flex" href="{{ url_for('main.home') }}">
+            <div class="brand-icon">
+              <i class="bi bi-lightning-charge-fill"></i>
+            </div>
+            <span>{{ gym_name }}</span>
+          </a>
+          <p class="text-muted pe-lg-4">
+            {{ gym_tagline }} Premium fitness destination equipped with state-of-the-art strength zones, world-class athletic coaching, and an empowering community.
+          </p>
+          <div class="d-flex gap-3 mt-3">
+            <a href="{{ gym_instagram }}" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-circle p-2" aria-label="Instagram">
+              <i class="bi bi-instagram fs-6"></i>
+            </a>
+            <a href="https://wa.me/{{ gym_whatsapp }}" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-circle p-2" aria-label="WhatsApp">
+              <i class="bi bi-whatsapp fs-6"></i>
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-circle p-2" aria-label="Facebook">
+              <i class="bi bi-facebook fs-6"></i>
+            </a>
+            <a href="https://youtube.com" target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm rounded-circle p-2" aria-label="YouTube">
+              <i class="bi bi-youtube fs-6"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-6 col-6">
+          <h5 class="footer-heading">Quick Links</h5>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('main.about') }}">About Us</a></li>
+            <li><a href="{{ url_for('main.membership') }}">Memberships</a></li>
+            <li><a href="{{ url_for('main.trainers') }}">Our Coaches</a></li>
+            <li><a href="{{ url_for('main.classes') }}">Class Timetable</a></li>
+            <li><a href="{{ url_for('main.facilities') }}">Facilities Tour</a></li>
+            <li><a href="{{ url_for('main.transformations') }}">Transformations</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-6 col-6">
+          <h5 class="footer-heading">Programs</h5>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('booking.book_trial') }}">Free 1-Day Trial</a></li>
+            <li><a href="{{ url_for('booking.book_consultation') }}">1-on-1 PT Booking</a></li>
+            <li><a href="{{ url_for('main.classes') }}">HIIT & Conditioning</a></li>
+            <li><a href="{{ url_for('main.classes') }}">Powerlifting Zone</a></li>
+            <li><a href="{{ url_for('main.classes') }}">Yoga & Recovery</a></li>
+            <li><a href="{{ url_for('auth.login') }}">Staff / Admin Portal</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+          <h5 class="footer-heading">Location & Hours</h5>
+          <p class="text-secondary small mb-2">
+            <i class="bi bi-geo-alt-fill text-accent me-2"></i> {{ gym_address }}
+          </p>
+          <p class="text-secondary small mb-2">
+            <i class="bi bi-telephone-fill text-accent me-2"></i> {{ gym_phone }}
+          </p>
+          <p class="text-secondary small mb-4">
+            <i class="bi bi-envelope-fill text-accent me-2"></i> {{ gym_email }}
+          </p>
+
+          <div class="p-3 rounded bg-dark border border-secondary border-opacity-25 small">
+            <div class="d-flex justify-content-between text-secondary mb-1">
+              <span>Mon – Fri:</span>
+              <strong class="text-white">05:30 AM – 11:00 PM</strong>
+            </div>
+            <div class="d-flex justify-content-between text-secondary">
+              <span>Sat – Sun:</span>
+              <strong class="text-white">06:00 AM – 09:00 PM</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pt-4 border-top border-secondary border-opacity-25 align-items-center">
+        <div class="col-md-6 text-center text-md-start text-muted small">
+          &copy; {{ current_year }} {{ gym_name }}. All rights reserved. Engineered for peak athletic performance.
+        </div>
+        <div class="col-md-6 text-center text-md-end text-muted small mt-2 mt-md-0">
+          <a href="{{ url_for('main.sitemap_xml') }}" class="text-muted me-3">Sitemap</a>
+          <a href="{{ url_for('auth.login') }}" class="text-accent fw-bold"><i class="bi bi-shield-lock-fill"></i> Admin Login</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====================================================
+       FLOATING WHATSAPP BUTTON
+       ==================================================== -->
+  <a href="https://wa.me/{{ gym_whatsapp }}?text=Hi,%20I%20am%20interested%20in%20joining%20Ironforge%20Fitness.%20I%20would%20like%20to%20know%20more%20about%20your%20membership%20plans."
+     target="_blank"
+     rel="noopener"
+     class="whatsapp-float"
+     title="Chat with us on WhatsApp"
+     aria-label="Chat with Ironforge on WhatsApp">
+    <i class="bi bi-whatsapp"></i>
+  </a>
+
+  <!-- ====================================================
+       STICKY MOBILE CTA BAR
+       ==================================================== -->
+  <div class="sticky-mobile-bar">
+    <div class="d-flex gap-2">
+      <a href="{{ url_for('booking.book_trial') }}" class="btn-primary-glow btn-sm w-50 text-center py-2">
+        <i class="bi bi-fire"></i> FREE TRIAL
+      </a>
+      <a href="{{ url_for('booking.book_consultation') }}" class="btn-outline-glass btn-sm w-50 text-center py-2">
+        <i class="bi bi-calendar-check"></i> CONSULTATION
+      </a>
+    </div>
+  </div>
+
+  <!-- ====================================================
+       INSTAGRAM REEL VIDEO MODAL
+       ==================================================== -->
+  <div class="modal fade" id="reelVideoModal" tabindex="-1" aria-labelledby="modalReelTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" style="max-width: 380px;">
+      <div class="modal-content bg-black border-0 text-white rounded-4 overflow-hidden shadow-lg">
+        <div class="modal-header border-0 pb-0 position-absolute top-0 end-0 z-3 p-3">
+          <button type="button" class="btn-close btn-close-white bg-dark p-2 rounded-circle shadow" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0 position-relative">
+          <div style="aspect-ratio: 9/16; width: 100%; background: #000;">
+            <video id="modalReelVideo" class="w-100 h-100 object-fit-cover" playsinline loop controls></video>
+          </div>
+          <div class="p-3 position-absolute bottom-0 start-0 end-0 bg-gradient-dark" style="background: linear-gradient(180deg, transparent, rgba(0,0,0,0.9) 60%);">
+            <h6 id="modalReelTitle" class="fw-bold mb-1 text-white"></h6>
+            <p id="modalReelCaption" class="small text-secondary mb-3"></p>
+            <a id="modalReelIgLink" href="{{ gym_instagram }}" target="_blank" rel="noopener" class="btn btn-sm btn-primary-glow w-100">
+              <i class="bi bi-instagram"></i> View on Instagram
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom Application Script -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+
+</body>
+</html>

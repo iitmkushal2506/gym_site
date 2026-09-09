@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us & Location | {{ gym_name }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-5 mt-5" style="background: radial-gradient(circle at 50% 0%, rgba(255, 42, 95, 0.12) 0%, transparent 60%), var(--bg-surface);">
+  <div class="container py-4 text-center">
+    <div class="badge-tag mb-2">GET IN TOUCH</div>
+    <h1 class="display-4 fw-bold">CONNECT WITH <span class="text-gradient">{{ gym_name }}</span></h1>
+    <p class="section-subtitle">Have questions about memberships, private coaching, or corporate packages? Our team is standing by.</p>
+  </div>
+</section>
+
+<!-- Contact Form & Info Grid -->
+<section class="py-5 my-4">
+  <div class="container">
+    <div class="row g-5">
+      <!-- Contact Form -->
+      <div class="col-lg-7">
+        <div class="form-glass">
+          <div class="badge-tag mb-2">SEND AN ENQUIRY</div>
+          <h2 class="h3 mb-4">HOW CAN WE <span class="text-gradient">HELP YOU?</span></h2>
+
+          <form method="POST" action="{{ url_for('contact.contact') }}" novalidate>
+            {{ form.hidden_tag() }}
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">{{ form.name.label.text }} *</label>
+                {{ form.name(class="form-control" + (" is-invalid" if form.name.errors else ""), placeholder="John Doe") }}
+                {% for error in form.name.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">{{ form.email.label.text }} *</label>
+                {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else ""), placeholder="john@example.com") }}
+                {% for error in form.email.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">{{ form.phone.label.text }} *</label>
+                {{ form.phone(class="form-control" + (" is-invalid" if form.phone.errors else ""), placeholder="+91 98765 43210") }}
+                {% for error in form.phone.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">{{ form.subject.label.text }} *</label>
+                {{ form.subject(class="form-control" + (" is-invalid" if form.subject.errors else ""), placeholder="Membership Inquiry") }}
+                {% for error in form.subject.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">{{ form.message.label.text }} *</label>
+                {{ form.message(class="form-control" + (" is-invalid" if form.message.errors else ""), rows=5, placeholder="Tell us how we can assist you...") }}
+                {% for error in form.message.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-12 mt-4">
+                {{ form.submit(class="btn-primary-glow w-100 py-3") }}
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Contact Info & Hours -->
+      <div class="col-lg-5">
+        <div class="gym-card mb-4">
+          <h4 class="h5 mb-3 text-white"><i class="bi bi-geo-alt-fill text-accent me-2"></i> Our Location</h4>
+          <p class="text-secondary small mb-4">{{ gym_address }}</p>
+
+          <h4 class="h5 mb-3 text-white"><i class="bi bi-telephone-fill text-accent me-2"></i> Direct Contact</h4>
+          <p class="text-secondary small mb-1"><strong>Phone:</strong> {{ gym_phone }}</p>
+          <p class="text-secondary small mb-4"><strong>Email:</strong> {{ gym_email }}</p>
+
+          <h4 class="h5 mb-3 text-white"><i class="bi bi-clock-fill text-accent me-2"></i> Operating Hours</h4>
+          <div class="p-3 rounded bg-dark border border-secondary border-opacity-25 small mb-4">
+            <div class="d-flex justify-content-between text-secondary mb-1">
+              <span>Monday – Friday:</span>
+              <strong class="text-white">05:30 AM – 11:00 PM</strong>
+            </div>
+            <div class="d-flex justify-content-between text-secondary">
+              <span>Saturday – Sunday:</span>
+              <strong class="text-white">06:00 AM – 09:00 PM</strong>
+            </div>
+          </div>
+
+          <div class="d-flex gap-2">
+            <a href="https://wa.me/{{ gym_whatsapp }}" target="_blank" rel="noopener" class="btn btn-success w-50 py-2 small fw-bold">
+              <i class="bi bi-whatsapp"></i> WhatsApp Us
+            </a>
+            <a href="{{ gym_instagram }}" target="_blank" rel="noopener" class="btn btn-outline-light w-50 py-2 small fw-bold">
+              <i class="bi bi-instagram"></i> Instagram
+            </a>
+          </div>
+        </div>
+
+        <!-- Google Maps Embed -->
+        <div class="rounded-4 overflow-hidden border border-secondary border-opacity-25 shadow-lg" style="height: 240px;">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.985532585257!2d77.5945627!3d12.9715987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDU4JzE3LjgiTiA3N8KwMzUnNDAuNCJF!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" 
+            width="100%" 
+            height="100%" 
+            style="border:0; filter: grayscale(100%) invert(92%) contrast(83%);" 
+            allowfullscreen="" 
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

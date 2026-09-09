@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Book 1-on-1 Strategy & PT Consultation | {{ gym_name }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-5 mt-5" style="background: radial-gradient(circle at 50% 0%, rgba(255, 42, 95, 0.15) 0%, transparent 60%), var(--bg-surface);">
+  <div class="container py-4 text-center">
+    <div class="badge-tag mb-2"><i class="bi bi-person-check-fill"></i> 1-ON-1 COACHING STRATEGY</div>
+    <h1 class="display-4 fw-bold">BOOK A COACH <span class="text-gradient">CONSULTATION</span></h1>
+    <p class="section-subtitle">Schedule a dedicated strategy session with our master trainers to design your custom periodization, nutrition, and physique roadmap.</p>
+  </div>
+</section>
+
+<!-- Consultation Form -->
+<section class="py-5 my-4">
+  <div class="container">
+    <div class="row g-5 align-items-center justify-content-center">
+      <div class="col-lg-8">
+        <div class="form-glass">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="h4 mb-0">REQUEST YOUR SESSION</h2>
+            <span class="badge bg-warning text-dark fw-bold">Status: Pending Verification</span>
+          </div>
+
+          <p class="text-secondary small mb-4">
+            To ensure zero schedule conflicts, appointment requests are reserved upon submission and verified by our head trainer within 24 hours.
+          </p>
+
+          <form method="POST" action="{{ url_for('booking.book_consultation') }}" novalidate>
+            {{ form.hidden_tag() }}
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">{{ form.name.label.text }} *</label>
+                {{ form.name(class="form-control" + (" is-invalid" if form.name.errors else ""), placeholder="Jordan Smith") }}
+                {% for error in form.name.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">{{ form.email.label.text }} *</label>
+                {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else ""), placeholder="jordan@example.com") }}
+                {% for error in form.email.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">{{ form.phone.label.text }} *</label>
+                {{ form.phone(class="form-control" + (" is-invalid" if form.phone.errors else ""), placeholder="+91 98765 43210") }}
+                {% for error in form.phone.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">{{ form.trainer_id.label.text }} *</label>
+                {{ form.trainer_id(class="form-select" + (" is-invalid" if form.trainer_id.errors else "")) }}
+                {% for error in form.trainer_id.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">{{ form.goal.label.text }} *</label>
+                {{ form.goal(class="form-select" + (" is-invalid" if form.goal.errors else "")) }}
+                {% for error in form.goal.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">{{ form.fitness_level.label.text }} *</label>
+                {{ form.fitness_level(class="form-select" + (" is-invalid" if form.fitness_level.errors else "")) }}
+                {% for error in form.fitness_level.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">{{ form.preferred_date.label.text }} *</label>
+                {{ form.preferred_date(class="form-control" + (" is-invalid" if form.preferred_date.errors else ""), type="date") }}
+                {% for error in form.preferred_date.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">{{ form.preferred_time.label.text }} *</label>
+                {{ form.preferred_time(class="form-select" + (" is-invalid" if form.preferred_time.errors else "")) }}
+                {% for error in form.preferred_time.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">{{ form.message.label.text }}</label>
+                {{ form.message(class="form-control" + (" is-invalid" if form.message.errors else ""), rows=3, placeholder="Tell us your goals, target timeframe, or any injury history...") }}
+                {% for error in form.message.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+              </div>
+
+              <div class="col-12 mt-4">
+                {{ form.submit(class="btn-primary-glow w-100 py-3") }}
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

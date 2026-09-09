@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Admin Portal | {{ gym_name }}{% endblock %}</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FF2A5F'/><path d='M30 70 L50 30 L70 70' stroke='white' stroke-width='10' stroke-linecap='round' fill='none'/><path d='M38 56 L62 56' stroke='white' stroke-width='8'/></svg>">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Admin Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body class="admin-body">
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-header">
+      <div class="p-2 rounded bg-danger text-white fs-5 fw-bold"><i class="bi bi-lightning-charge-fill"></i></div>
+      <div>
+        <h6 class="mb-0 fw-bold text-white">{{ gym_name }}</h6>
+        <small class="text-muted" style="font-size: 0.72rem;">MANAGEMENT PORTAL</small>
+      </div>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li>
+        <a href="{{ url_for('admin.dashboard') }}" class="sidebar-link {% if request.endpoint == 'admin.dashboard' %}active{% endif %}">
+          <i class="bi bi-speedometer2"></i> Dashboard
+        </a>
+      </li>
+
+      <li class="mt-3 px-3 text-muted text-uppercase fw-bold" style="font-size: 0.68rem; letter-spacing: 0.08em;">LEAD PIPELINE</li>
+      <li>
+        <a href="{{ url_for('admin.leads') }}" class="sidebar-link {% if request.endpoint == 'admin.leads' %}active{% endif %}">
+          <i class="bi bi-funnel-fill"></i> All Leads & Notes
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('admin.trials') }}" class="sidebar-link {% if request.endpoint == 'admin.trials' %}active{% endif %}">
+          <i class="bi bi-fire"></i> Free Trial Passes
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('admin.appointments') }}" class="sidebar-link {% if request.endpoint == 'admin.appointments' %}active{% endif %}">
+          <i class="bi bi-calendar2-check-fill"></i> PT Appointments
+        </a>
+      </li>
+
+      <li class="mt-3 px-3 text-muted text-uppercase fw-bold" style="font-size: 0.68rem; letter-spacing: 0.08em;">GYM CONTENT</li>
+      <li>
+        <a href="{{ url_for('admin.memberships') }}" class="sidebar-link {% if request.endpoint in ['admin.memberships', 'admin.create_membership', 'admin.edit_membership'] %}active{% endif %}">
+          <i class="bi bi-card-checklist"></i> Memberships
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('admin.trainers') }}" class="sidebar-link {% if request.endpoint in ['admin.trainers', 'admin.create_trainer', 'admin.edit_trainer'] %}active{% endif %}">
+          <i class="bi bi-person-badge-fill"></i> Trainers & Coaches
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('admin.classes') }}" class="sidebar-link {% if request.endpoint in ['admin.classes', 'admin.create_class', 'admin.edit_class'] %}active{% endif %}">
+          <i class="bi bi-clock-history"></i> Class Timetable
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('admin.facilities') }}" class="sidebar-link {% if request.endpoint in ['admin.facilities', 'admin.create_facility', 'admin.edit_facility'] %}active{% endif %}">
+          <i class="bi bi-building"></i> Facilities & Zones
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('admin.transformations') }}" class="sidebar-link {% if request.endpoint in ['admin.transformations', 'admin.create_transformation', 'admin.edit_transformation'] %}active{% endif %}">
+          <i class="bi bi-stars"></i> Transformations
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('admin.testimonials') }}" class="sidebar-link {% if request.endpoint in ['admin.testimonials', 'admin.create_testimonial', 'admin.edit_testimonial'] %}active{% endif %}">
+          <i class="bi bi-chat-square-quote-fill"></i> Testimonials
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('admin.instagram') }}" class="sidebar-link {% if request.endpoint in ['admin.instagram', 'admin.create_reel', 'admin.edit_reel'] %}active{% endif %}">
+          <i class="bi bi-instagram"></i> Instagram / Reels
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-2">
+          <div class="rounded-circle bg-secondary p-1 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+            <i class="bi bi-person-fill text-white"></i>
+          </div>
+          <div>
+            <div class="text-white small fw-bold">{{ current_user.username }}</div>
+            <div class="text-muted" style="font-size: 0.7rem;">Administrator</div>
+          </div>
+        </div>
+        <a href="{{ url_for('auth.logout') }}" class="text-danger" title="Sign Out">
+          <i class="bi bi-box-arrow-right fs-5"></i>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="admin-main">
+    <!-- Topbar -->
+    <header class="admin-topbar">
+      <div class="d-flex align-items-center gap-3">
+        <button id="sidebarToggle" class="btn btn-outline-secondary btn-sm d-lg-none text-white border-0" aria-label="Toggle Sidebar">
+          <i class="bi bi-list fs-4"></i>
+        </button>
+        <h5 class="mb-0 text-white fw-bold d-none d-sm-block">{% block page_title %}Dashboard{% endblock %}</h5>
+      </div>
+
+      <div class="d-flex align-items-center gap-3">
+        <a href="{{ url_for('main.home') }}" target="_blank" class="btn btn-outline-light btn-sm rounded-3">
+          <i class="bi bi-globe me-1"></i> Live Website <i class="bi bi-box-arrow-up-right small ms-1"></i>
+        </a>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-danger btn-sm rounded-3">
+          <i class="bi bi-box-arrow-right me-1"></i> Logout
+        </a>
+      </div>
+    </header>
+
+    <!-- Flash Messages -->
+    <div class="px-4 pt-3">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category if category != 'error' else 'danger' }} alert-dismissible fade show shadow-sm border-0 bg-dark text-white border-start border-4 border-{{ category if category != 'error' else 'danger' }}" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
+
+    <!-- Page Body -->
+    <main class="admin-content">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  <!-- Generic Delete Confirmation Modal -->
+  <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content admin-modal">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i> Confirm Deletion</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body py-3">
+          <p class="small text-secondary mb-0">Are you sure you want to delete <strong id="deleteItemName" class="text-white">this item</strong>? This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer border-0 pt-0">
+          <form id="deleteModalForm" method="POST" action="">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-danger btn-sm">Delete Forever</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+
+</body>
+</html>

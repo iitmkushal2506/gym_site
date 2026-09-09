@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}Membership Plans | {{ gym_name }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-5 mt-5" style="background: radial-gradient(circle at 50% 0%, rgba(255, 42, 95, 0.12) 0%, transparent 60%), var(--bg-surface);">
+  <div class="container py-4 text-center">
+    <div class="badge-tag mb-2">PRICING & MEMBERSHIP</div>
+    <h1 class="display-4 fw-bold">CHOOSE YOUR <span class="text-gradient">MEMBERSHIP TIER</span></h1>
+    <p class="section-subtitle">Transparent pricing, no lock-in contracts, and world-class athletic facilities.</p>
+  </div>
+</section>
+
+<!-- Membership Cards -->
+<section class="py-5 my-4">
+  <div class="container">
+    <div class="row g-4 align-items-stretch justify-content-center">
+      {% for plan in plans %}
+      <div class="col-lg-4 col-md-6">
+        <div class="pricing-card {% if plan.featured %}featured{% endif %}">
+          {% if plan.featured %}
+          <div class="pricing-badge"><i class="bi bi-star-fill"></i> MOST POPULAR</div>
+          {% endif %}
+
+          <h3 class="h4 mb-1 text-white">{{ plan.name }}</h3>
+          <p class="text-muted small mb-0">{{ plan.description or 'Unrestricted training facility access' }}</p>
+
+          <div class="pricing-price">
+            <span class="pricing-currency">₹</span>{{ "{:,.0f}".format(plan.price) }}
+            <span class="pricing-period">/ {{ plan.duration }}</span>
+          </div>
+
+          <hr class="border-secondary border-opacity-25 my-4">
+
+          <div class="flex-grow-1 mb-4">
+            <div class="text-white fw-bold small text-uppercase mb-3">Included Benefits:</div>
+            {% for f in plan.feature_list %}
+            <div class="feature-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span>{{ f }}</span>
+            </div>
+            {% endfor %}
+          </div>
+
+          <a href="{{ url_for('booking.book_trial') }}" class="{% if plan.featured %}btn-primary-glow{% else %}btn-outline-glass{% endif %} w-100 text-center">
+            CLAIM FREE TRIAL & JOIN
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- All Memberships Include -->
+<section class="py-5" style="background-color: var(--bg-surface);">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="badge-tag mb-2">STANDARD PERKS</div>
+      <h2 class="section-title">ALL MEMBERSHIPS <span class="text-gradient">INCLUDE</span></h2>
+    </div>
+
+    <div class="row g-4 text-center">
+      <div class="col-md-3 col-6">
+        <div class="p-4 rounded-4 bg-dark border border-secondary border-opacity-25">
+          <i class="bi bi-shield-lock-fill text-accent display-6 mb-2"></i>
+          <h6 class="fw-bold text-white mb-1">Zero Hidden Fees</h6>
+          <p class="text-muted small mb-0">No sneaky cancellation or maintenance surcharges.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-6">
+        <div class="p-4 rounded-4 bg-dark border border-secondary border-opacity-25">
+          <i class="bi bi-cup-straw text-accent display-6 mb-2"></i>
+          <h6 class="fw-bold text-white mb-1">Smoothie Bar Discount</h6>
+          <p class="text-muted small mb-0">15% off at the on-site protein shake & coffee bar.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-6">
+        <div class="p-4 rounded-4 bg-dark border border-secondary border-opacity-25">
+          <i class="bi bi-wifi text-accent display-6 mb-2"></i>
+          <h6 class="fw-bold text-white mb-1">High-Speed Wi-Fi</h6>
+          <p class="text-muted small mb-0">Ultra-fast fiber internet across all zones.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-6">
+        <div class="p-4 rounded-4 bg-dark border border-secondary border-opacity-25">
+          <i class="bi bi-water text-accent display-6 mb-2"></i>
+          <h6 class="fw-bold text-white mb-1">Luxury Shower Suites</h6>
+          <p class="text-muted small mb-0">Equipped with towel service and grooming amenities.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Accordion -->
+<section class="py-5 my-5">
+  <div class="container" style="max-width: 800px;">
+    <div class="text-center mb-5">
+      <div class="badge-tag mb-2">QUESTIONS & ANSWERS</div>
+      <h2 class="section-title">FREQUENTLY ASKED <span class="text-gradient">QUESTIONS</span></h2>
+    </div>
+
+    <div class="accordion accordion-flush" id="faqAccordion">
+      <div class="accordion-item bg-dark border border-secondary border-opacity-25 rounded-3 mb-3">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed bg-dark text-white fw-bold shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+            Can I test the gym before committing to a membership?
+          </button>
+        </h2>
+        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-secondary">
+            Yes! We provide a complimentary 1-Day VIP pass for local residents. You can book directly on our website via the <a href="{{ url_for('booking.book_trial') }}" class="text-accent">Free Trial page</a>.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item bg-dark border border-secondary border-opacity-25 rounded-3 mb-3">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed bg-dark text-white fw-bold shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+            Are group classes included in the standard plans?
+          </button>
+        </h2>
+        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-secondary">
+            Group fitness classes (HIIT, Boxing, Yoga, CrossFit) are fully included with our Premium and Elite tiers, and available as an add-on for Basic members.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item bg-dark border border-secondary border-opacity-25 rounded-3 mb-3">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed bg-dark text-white fw-bold shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+            Can I freeze or pause my membership when traveling?
+          </button>
+        </h2>
+        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-secondary">
+            Yes, all 3-month and annual members can freeze their membership for up to 30 days per year free of charge by notifying the front desk.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item bg-dark border border-secondary border-opacity-25 rounded-3 mb-3">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed bg-dark text-white fw-bold shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+            How do I book 1-on-1 Personal Training?
+          </button>
+        </h2>
+        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-secondary">
+            You can select your preferred coach and schedule a strategy consultation directly on our <a href="{{ url_for('booking.book_consultation') }}" class="text-accent">Book Consultation page</a>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
