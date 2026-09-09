@@ -114,6 +114,8 @@ def run_tests():
         print("[PASS] Free trial booking submitted successfully and redirected to success page!")
 
     # Test Consultation Booking with Double-Booking Prevention
+    import time
+    test_date = f"2027-11-{(int(time.time()) % 25) + 1:02d}"
     status, consult_html = test_url('/book-consultation')
     consult_csrf = extract_csrf(consult_html)
     
@@ -126,7 +128,7 @@ def run_tests():
         'trainer_id': '1',
         'goal': '1-on-1 Personal Training',
         'fitness_level': 'Intermediate (1-2 years consistent)',
-        'preferred_date': '2026-10-15',
+        'preferred_date': test_date,
         'preferred_time': '07:00 AM',
         'message': 'Session 1'
     }).encode('utf-8')
@@ -148,7 +150,7 @@ def run_tests():
         'trainer_id': '1',
         'goal': '1-on-1 Personal Training',
         'fitness_level': 'Beginner (Just getting started)',
-        'preferred_date': '2026-10-15',
+        'preferred_date': test_date,
         'preferred_time': '07:00 AM',
         'message': 'Session conflict test'
     }).encode('utf-8')

@@ -21,16 +21,17 @@ def send_async_email(app, msg):
 def send_trial_confirmation(trial):
     """Notify customer of trial booking & alert admin."""
     app = current_app._get_current_object()
+    gym_title = app.config.get('GYM_NAME', "Kushal's Gym Site")
     
     # 1. Customer Email
     cust_msg = Message(
-        subject=f"Your Free Trial Pass at {app.config.get('GYM_NAME', 'Ironforge Fitness')} is Booked!",
+        subject=f"Your Free Trial Pass at {gym_title} is Booked!",
         sender=app.config.get('MAIL_DEFAULT_SENDER'),
         recipients=[trial.email]
     )
     cust_msg.body = f"""Hi {trial.name},
 
-Thank you for choosing {app.config.get('GYM_NAME', 'Ironforge Fitness')}!
+Thank you for choosing {gym_title}!
 
 We have received your Free Trial request. Here are your booking details:
 - Date: {trial.preferred_date}
@@ -48,7 +49,7 @@ Our team looks forward to welcoming you at {app.config.get('GYM_ADDRESS')}.
 If you need to reschedule or have questions, reach us on WhatsApp: {app.config.get('GYM_PHONE')}.
 
 Strength & Honor,
-The Ironforge Fitness Team
+The {gym_title} Team
 """
 
     # 2. Admin Alert Email
@@ -79,9 +80,10 @@ Log in to the Admin Dashboard to manage this lead.
 def send_consultation_confirmation(consultation, trainer_name="Assigned Coach"):
     """Notify customer of consultation request & alert gym."""
     app = current_app._get_current_object()
+    gym_title = app.config.get('GYM_NAME', "Kushal's Gym Site")
 
     cust_msg = Message(
-        subject=f"Consultation Request Received - {app.config.get('GYM_NAME', 'Ironforge Fitness')}",
+        subject=f"Consultation Request Received - {gym_title}",
         sender=app.config.get('MAIL_DEFAULT_SENDER'),
         recipients=[consultation.email]
     )
@@ -99,7 +101,7 @@ Appointment Details (Status: PENDING REVIEW):
 Our coaching manager will review your schedule and confirm the appointment within 24 hours.
 
 Best regards,
-{app.config.get('GYM_NAME', 'Ironforge Fitness')} Coaching Staff
+{gym_title} Coaching Staff
 """
 
     admin_email = app.config.get('ADMIN_NOTIFICATION_EMAIL') or app.config.get('MAIL_DEFAULT_SENDER')

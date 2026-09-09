@@ -18,7 +18,7 @@ def seed_database():
         if not admin:
             admin = Admin(
                 username='admin',
-                email='admin@ironforgefitness.com'
+                email='admin@kushalgym.demo'
             )
             admin.set_password('admin123')
             db.session.add(admin)

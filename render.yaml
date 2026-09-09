@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: ironforge-fitness
+    name: kushals-gym-site
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn run:app
@@ -11,21 +11,25 @@ services:
         generateValue: true
       - key: DATABASE_URL
         fromDatabase:
-          name: ironforge-db
+          name: kushalgym-db
           property: connectionString
       - key: GYM_NAME
-        value: IRONFORGE FITNESS
+        value: "KUSHAL'S GYM SITE"
       - key: GYM_TAGLINE
-        value: BUILD STRONGER. LIVE STRONGER.
+        value: "BUILD STRONGER. LIVE STRONGER."
       - key: GYM_PHONE
-        value: "+91 98765 43210"
+        value: "+91 98XXX XXXXX"
       - key: GYM_EMAIL
-        value: info@ironforgefitness.com
+        value: "contact@kushalgym.demo"
+      - key: GYM_ADDRESS
+        value: "123 Fitness Boulevard, Sector XX, Metro City, 000000"
       - key: GYM_WHATSAPP
-        value: "919876543210"
+        value: "9198XXXXXXXX"
+      - key: GYM_INSTAGRAM
+        value: "https://instagram.com/yourgymhandle"
 
 databases:
-  - name: ironforge-db
-    databaseName: ironforge
-    user: ironforge_user
+  - name: kushalgym-db
+    databaseName: kushalgym
+    user: kushalgym_user
     plan: free

@@ -31,17 +31,17 @@ class Config:
     MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL', 'False').lower() in ('true', '1', 't')
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER', 'notifications@ironforgefitness.com')
-    ADMIN_NOTIFICATION_EMAIL = os.environ.get('ADMIN_NOTIFICATION_EMAIL', 'gymadmin@ironforgefitness.com')
+    MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER', 'notifications@kushalgym.demo')
+    ADMIN_NOTIFICATION_EMAIL = os.environ.get('ADMIN_NOTIFICATION_EMAIL', 'admin@kushalgym.demo')
     
-    # Business Brand Defaults
-    GYM_NAME = os.environ.get('GYM_NAME', 'IRONFORGE FITNESS')
+    # Business Brand Defaults (Portfolio Showcase)
+    GYM_NAME = os.environ.get('GYM_NAME', "KUSHAL'S GYM SITE")
     GYM_TAGLINE = os.environ.get('GYM_TAGLINE', 'BUILD STRONGER. LIVE STRONGER.')
-    GYM_PHONE = os.environ.get('GYM_PHONE', '+91 98765 43210')
-    GYM_EMAIL = os.environ.get('GYM_EMAIL', 'info@ironforgefitness.com')
-    GYM_ADDRESS = os.environ.get('GYM_ADDRESS', '42 Titan Avenue, Platinum Heights, Metro City, 560001')
-    GYM_WHATSAPP = os.environ.get('GYM_WHATSAPP', '919876543210')
-    GYM_INSTAGRAM = os.environ.get('GYM_INSTAGRAM', 'https://instagram.com/ironforgefitness')
+    GYM_PHONE = os.environ.get('GYM_PHONE', '+91 98XXX XXXXX')
+    GYM_EMAIL = os.environ.get('GYM_EMAIL', 'contact@kushalgym.demo')
+    GYM_ADDRESS = os.environ.get('GYM_ADDRESS', '123 Fitness Boulevard, Sector XX, Metro City, 000000')
+    GYM_WHATSAPP = os.environ.get('GYM_WHATSAPP', '9198XXXXXXXX')
+    GYM_INSTAGRAM = os.environ.get('GYM_INSTAGRAM', 'https://instagram.com/yourgymhandle')
     
     # Google Analytics ID
     GA_TRACKING_ID = os.environ.get('GA_TRACKING_ID', '')
