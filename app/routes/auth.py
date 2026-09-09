@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required, current_user
 from app.models import Admin
 from app.forms import AdminLoginForm
+from app.extensions import db
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -29,14 +30,34 @@ def login():
                 return redirect(next_page)
             return redirect(url_for('admin.dashboard'))
         else:
-            flash('Invalid username/email or password. Please check your credentials.', 'danger')
+            flash('Invalid username/email or password. Use 1-Click Demo Login to explore without password.', 'danger')
 
     return render_template('admin/login.html', form=form)
+
+
+@auth_bp.route('/demo-login')
+@auth_bp.route('/bypass')
+def demo_bypass_login():
+    """1-Click instant bypass login for client portfolio exploration."""
+    admin = Admin.query.filter_by(username='admin').first()
+    if not admin:
+        # Create default admin dynamically if database is fresh
+        admin = Admin(
+            username='admin',
+            email='admin@kushalgym.demo'
+        )
+        admin.set_password('admin123')
+        db.session.add(admin)
+        db.session.commit()
+
+    login_user(admin, remember=True)
+    flash('Logged in via 1-Click Client Demo Mode! You have full access to explore the admin dashboard and CRM.', 'success')
+    return redirect(url_for('admin.dashboard'))
 
 
 @auth_bp.route('/logout')
 @login_required
 def logout():
     logout_user()
-    flash('You have been securely signed out of the Admin Portal.', 'info')
+    flash('You have signed out of the Admin Portal.', 'info')
     return redirect(url_for('auth.login'))

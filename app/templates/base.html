@@ -172,8 +172,7 @@
             <li><a href="{{ url_for('booking.book_consultation') }}">1-on-1 PT Booking</a></li>
             <li><a href="{{ url_for('main.classes') }}">HIIT & Conditioning</a></li>
             <li><a href="{{ url_for('main.classes') }}">Powerlifting Zone</a></li>
-            <li><a href="{{ url_for('main.classes') }}">Yoga & Recovery</a></li>
-            <li><a href="{{ url_for('auth.login') }}">Staff / Admin Portal</a></li>
+            <li><a href="{{ url_for('auth.demo_bypass_login') }}" class="text-accent fw-bold"><i class="bi bi-lightning-fill"></i> Admin Demo (1-Click)</a></li>
           </ul>
         </div>
 
@@ -204,11 +203,11 @@
 
       <div class="row pt-4 border-top border-secondary border-opacity-25 align-items-center">
         <div class="col-md-6 text-center text-md-start text-muted small">
-          &copy; {{ current_year }} {{ gym_name }}. All rights reserved. Engineered for peak athletic performance.
+          &copy; {{ current_year }} {{ gym_name }}. All rights reserved. Portfolio Client Demo.
         </div>
         <div class="col-md-6 text-center text-md-end text-muted small mt-2 mt-md-0">
           <a href="{{ url_for('main.sitemap_xml') }}" class="text-muted me-3">Sitemap</a>
-          <a href="{{ url_for('auth.login') }}" class="text-accent fw-bold"><i class="bi bi-shield-lock-fill"></i> Admin Login</a>
+          <a href="{{ url_for('auth.demo_bypass_login') }}" class="text-accent fw-bold"><i class="bi bi-shield-lock-fill"></i> Admin Demo Login</a>
         </div>
       </div>
     </div>

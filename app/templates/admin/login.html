@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Login | {{ gym_name }}</title>
+  <title>Admin Portal | {{ gym_name }}</title>
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FF2A5F'/><path d='M30 70 L50 30 L70 70' stroke='white' stroke-width='10' stroke-linecap='round' fill='none'/><path d='M38 56 L62 56' stroke='white' stroke-width='8'/></svg>">
@@ -16,7 +16,7 @@
 </head>
 <body style="background: radial-gradient(circle at 50% 30%, rgba(255, 42, 95, 0.15) 0%, transparent 60%), #08090C; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;">
 
-  <div class="w-100" style="max-width: 440px;">
+  <div class="w-100" style="max-width: 460px;">
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
@@ -38,6 +38,20 @@
         <p class="text-muted small">STAFF & MANAGEMENT PORTAL</p>
       </div>
 
+      <!-- ⚡ 1-Click Client Demo Bypass Button -->
+      <div class="p-3 mb-4 rounded-3 border border-danger border-opacity-50 text-center" style="background: rgba(255, 42, 95, 0.08);">
+        <div class="text-white fw-bold small mb-1"><i class="bi bi-lightning-charge-fill text-danger"></i> CLIENT PORTFOLIO SHOWCASE</div>
+        <p class="text-secondary small mb-3">Explore the full admin dashboard, lead CRM, and content managers with zero password setup.</p>
+        <a href="{{ url_for('auth.demo_bypass_login') }}" class="btn btn-primary-glow btn-sm w-100 py-2 fw-bold">
+          <i class="bi bi-box-arrow-in-right me-1"></i> 1-CLICK DEMO LOGIN AS ADMIN
+        </a>
+      </div>
+
+      <div class="position-relative text-center my-4">
+        <hr class="border-secondary border-opacity-25">
+        <span class="position-absolute top-50 start-50 translate-middle bg-dark px-3 text-muted small text-uppercase" style="font-size: 0.72rem;">or sign in with password</span>
+      </div>
+
       <form method="POST" action="{{ url_for('auth.login') }}" novalidate>
         {{ form.hidden_tag() }}
 
@@ -45,7 +59,7 @@
           <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.username.label.text }}</label>
           <div class="input-group">
             <span class="input-group-text bg-dark border-secondary border-opacity-25 text-muted"><i class="bi bi-person-fill"></i></span>
-            {{ form.username(class="form-control bg-dark border-secondary border-opacity-25 text-white" + (" is-invalid" if form.username.errors else ""), placeholder="admin") }}
+            {{ form.username(class="form-control bg-dark border-secondary border-opacity-25 text-white" + (" is-invalid" if form.username.errors else ""), placeholder="admin", value="admin") }}
           </div>
           {% for error in form.username.errors %}
           <div class="text-danger small mt-1">{{ error }}</div>
@@ -56,7 +70,7 @@
           <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.password.label.text }}</label>
           <div class="input-group">
             <span class="input-group-text bg-dark border-secondary border-opacity-25 text-muted"><i class="bi bi-key-fill"></i></span>
-            {{ form.password(class="form-control bg-dark border-secondary border-opacity-25 text-white" + (" is-invalid" if form.password.errors else ""), placeholder="••••••••") }}
+            {{ form.password(class="form-control bg-dark border-secondary border-opacity-25 text-white" + (" is-invalid" if form.password.errors else ""), placeholder="admin123", value="admin123") }}
           </div>
           {% for error in form.password.errors %}
           <div class="text-danger small mt-1">{{ error }}</div>
@@ -70,7 +84,7 @@
           </label>
         </div>
 
-        {{ form.submit(class="btn-primary-glow w-100 py-3 mb-3") }}
+        {{ form.submit(class="btn btn-outline-light w-100 py-2 mb-3") }}
 
         <div class="text-center">
           <a href="{{ url_for('main.home') }}" class="text-muted small">
