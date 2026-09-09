@@ -5,14 +5,15 @@ from app.extensions import db
 from app.models import Admin
 from seed import seed_database
 
-app = create_app(os.environ.get('FLASK_ENV', 'development'))
+env = os.environ.get('FLASK_ENV', 'development')
+app = create_app(env)
 
 
 @app.cli.command("seed-db")
 def seed_db_command():
     """Seed the database with realistic demo data."""
-    click.echo("Seeding Ironforge Fitness database...")
-    seed_database()
+    click.echo("Seeding Kushal's Gym Site database...")
+    seed_database(app)
     click.echo("Seeding completed successfully!")
 
 
@@ -37,9 +38,12 @@ def create_admin_command(username, email, password):
 
 # Auto-seed on first start if tables don't exist
 with app.app_context():
-    db.create_all()
-    if Admin.query.count() == 0:
-        seed_database()
+    try:
+        db.create_all()
+        if Admin.query.count() == 0:
+            seed_database(app)
+    except Exception as e:
+        app.logger.warning(f"Startup DB initialization notice: {e}")
 
 
 if __name__ == '__main__':

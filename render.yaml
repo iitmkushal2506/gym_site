@@ -3,8 +3,10 @@ services:
     name: kushals-gym-site
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn run:app
+    startCommand: gunicorn wsgi:app
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
       - key: FLASK_ENV
         value: production
       - key: SECRET_KEY

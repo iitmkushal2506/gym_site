@@ -7,8 +7,10 @@ from app.models import (
     LeadNote, InstagramReel
 )
 
-def seed_database():
-    app = create_app('development')
+def seed_database(app=None):
+    if app is None:
+        app = create_app(os.environ.get('FLASK_ENV', 'development'))
+
     with app.app_context():
         # Create all database tables
         db.create_all()
