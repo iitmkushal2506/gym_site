@@ -255,7 +255,8 @@ def appointment_status(id):
 @login_required
 def memberships():
     plans = MembershipPlan.query.order_by(MembershipPlan.price.asc()).all()
-    return render_template('admin/memberships.html', plans=plans)
+    form = MembershipPlanForm()
+    return render_template('admin/memberships.html', form=form, action='create', plans=plans)
 
 
 @admin_bp.route('/memberships/create', methods=['GET', 'POST'])
@@ -315,7 +316,8 @@ def delete_membership(id):
 @login_required
 def trainers():
     all_trainers = Trainer.query.order_by(Trainer.id.asc()).all()
-    return render_template('admin/trainers.html', trainers=all_trainers)
+    form = TrainerForm()
+    return render_template('admin/trainers.html', form=form, action='create', trainers=all_trainers)
 
 
 @admin_bp.route('/trainers/create', methods=['GET', 'POST'])
@@ -381,7 +383,10 @@ def delete_trainer(id):
 @login_required
 def classes():
     classes_list = GymClass.query.order_by(GymClass.day, GymClass.start_time).all()
-    return render_template('admin/classes.html', classes=classes_list)
+    form = GymClassForm()
+    trainers_list = Trainer.query.filter_by(is_active=True).all()
+    form.trainer_id.choices = [(0, '-- Unassigned / Open Class --')] + [(t.id, t.name) for t in trainers_list]
+    return render_template('admin/classes.html', form=form, action='create', classes=classes_list)
 
 
 @admin_bp.route('/classes/create', methods=['GET', 'POST'])
@@ -451,7 +456,8 @@ def delete_class(id):
 @login_required
 def facilities():
     facilities_list = Facility.query.order_by(Facility.display_order.asc()).all()
-    return render_template('admin/facilities.html', facilities=facilities_list)
+    form = FacilityForm()
+    return render_template('admin/facilities.html', form=form, action='create', facilities=facilities_list)
 
 
 @admin_bp.route('/facilities/create', methods=['GET', 'POST'])
@@ -509,7 +515,8 @@ def delete_facility(id):
 @login_required
 def transformations():
     transformations_list = Transformation.query.order_by(Transformation.created_at.desc()).all()
-    return render_template('admin/transformations.html', transformations=transformations_list)
+    form = TransformationForm()
+    return render_template('admin/transformations.html', form=form, action='create', transformations=transformations_list)
 
 
 @admin_bp.route('/transformations/create', methods=['GET', 'POST'])
@@ -571,7 +578,8 @@ def delete_transformation(id):
 @login_required
 def testimonials():
     testimonials_list = Testimonial.query.order_by(Testimonial.created_at.desc()).all()
-    return render_template('admin/testimonials.html', testimonials=testimonials_list)
+    form = TestimonialForm()
+    return render_template('admin/testimonials.html', form=form, action='create', testimonials=testimonials_list)
 
 
 @admin_bp.route('/testimonials/create', methods=['GET', 'POST'])
@@ -627,7 +635,8 @@ def delete_testimonial(id):
 @login_required
 def instagram():
     reels_list = InstagramReel.query.order_by(InstagramReel.display_order.asc()).all()
-    return render_template('admin/instagram.html', reels=reels_list)
+    form = InstagramReelForm()
+    return render_template('admin/instagram.html', form=form, action='create', reels=reels_list)
 
 
 @admin_bp.route('/instagram/create', methods=['GET', 'POST'])

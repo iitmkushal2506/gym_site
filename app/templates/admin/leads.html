@@ -4,26 +4,26 @@
 
 {% block content %}
 <!-- Search and Filter Bar -->
-<div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 mb-4">
+<div class="p-3 rounded-3 admin-box-card mb-4">
   <form method="GET" action="{{ url_for('admin.leads') }}" class="row g-2 align-items-center">
     <div class="col-md-4">
       <div class="input-group input-group-sm">
-        <span class="input-group-text bg-black border-secondary border-opacity-25 text-muted"><i class="bi bi-search"></i></span>
-        <input type="text" name="q" value="{{ search_q }}" class="form-control bg-black border-secondary border-opacity-25 text-white" placeholder="Search by name, email, or phone...">
+        <span class="input-group-text bg-dark border-secondary border-opacity-25 text-muted"><i class="bi bi-search"></i></span>
+        <input type="text" name="q" value="{{ search_q }}" class="form-control" placeholder="Search by name, email, or phone...">
       </div>
     </div>
 
     <div class="col-md-3 col-6">
-      <select name="type" class="form-select form-select-sm bg-black border-secondary border-opacity-25 text-white" onchange="this.form.submit()">
+      <select name="type" class="form-select form-select-sm" onchange="this.form.submit()">
         <option value="ALL" {% if lead_type == 'ALL' %}selected{% endif %}>All Lead Channels</option>
-        <option value="TRIAL" {% if lead_type == 'TRIAL' %}selected{% endif %}>Free Trial Requests</option>
+        <option value="TRIAL" {% if lead_type == 'TRIAL' %}selected{% endif %}>Free VIP Trial Passes</option>
         <option value="CONSULTATION" {% if lead_type == 'CONSULTATION' %}selected{% endif %}>PT Consultations</option>
         <option value="ENQUIRY" {% if lead_type == 'ENQUIRY' %}selected{% endif %}>Website Enquiries</option>
       </select>
     </div>
 
     <div class="col-md-3 col-6">
-      <select name="status" class="form-select form-select-sm bg-black border-secondary border-opacity-25 text-white" onchange="this.form.submit()">
+      <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
         <option value="ALL" {% if status_filter == 'ALL' %}selected{% endif %}>All Statuses</option>
         <option value="NEW" {% if status_filter == 'NEW' %}selected{% endif %}>NEW</option>
         <option value="CONTACTED" {% if status_filter == 'CONTACTED' %}selected{% endif %}>CONTACTED</option>
@@ -34,8 +34,8 @@
     </div>
 
     <div class="col-md-2 d-flex gap-2">
-      <button type="submit" class="btn btn-danger btn-sm w-100">Filter</button>
-      <a href="{{ url_for('admin.leads') }}" class="btn btn-outline-secondary btn-sm" title="Reset Filters"><i class="bi bi-arrow-counterclockwise"></i></a>
+      <button type="submit" class="btn btn-primary-admin btn-sm w-100">Filter</button>
+      <a href="{{ url_for('admin.leads') }}" class="btn btn-outline-bron btn-outline-bronze btn-sm" title="Reset Filters"><i class="bi bi-arrow-counterclockwise"></i></a>
     </div>
   </form>
 </div>
@@ -46,9 +46,9 @@
     <table class="table-custom">
       <thead>
         <tr>
-          <th>Type / Source</th>
+          <th>Channel</th>
           <th>Lead Contact</th>
-          <th>Details / Target Slot</th>
+          <th>Details / Request</th>
           <th>Status</th>
           <th>Internal Notes</th>
           <th class="text-end">Actions</th>
@@ -60,7 +60,7 @@
         {% set note_key = "TRIAL_" ~ t.id %}
         {% set current_notes = notes_by_lead.get(note_key, []) %}
         <tr>
-          <td><span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25"><i class="bi bi-fire me-1"></i> FREE TRIAL</span></td>
+          <td><span class="badge badge-red"><i class="bi bi-fire me-1"></i> FREE TRIAL</span></td>
           <td>
             <strong class="text-white d-block">{{ t.name }}</strong>
             <small class="text-muted"><i class="bi bi-envelope"></i> {{ t.email }}</small><br>
@@ -74,7 +74,7 @@
           <td>
             <form method="POST" action="{{ url_for('admin.update_lead_status', lead_type='TRIAL', id=t.id) }}">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-              <select name="status" class="form-select form-select-sm bg-dark border-secondary border-opacity-25 text-white" style="font-size: 0.78rem;" onchange="this.form.submit()">
+              <select name="status" class="form-select form-select-sm" style="font-size: 0.78rem;" onchange="this.form.submit()">
                 <option value="NEW" {% if t.status == 'NEW' %}selected{% endif %}>NEW</option>
                 <option value="CONTACTED" {% if t.status == 'CONTACTED' %}selected{% endif %}>CONTACTED</option>
                 <option value="CONFIRMED" {% if t.status == 'CONFIRMED' %}selected{% endif %}>CONFIRMED</option>
@@ -84,7 +84,7 @@
             </form>
           </td>
           <td>
-            <button class="btn btn-outline-secondary btn-sm btn-notes-trigger"
+            <button class="btn btn-outline-bronze btn-sm btn-notes-trigger"
                     data-type="TRIAL"
                     data-id="{{ t.id }}"
                     data-name="{{ t.name }}"
@@ -93,7 +93,7 @@
             </button>
           </td>
           <td class="text-end">
-            <button class="btn btn-outline-danger btn-sm btn-delete-trigger" data-action="{{ url_for('admin.delete_lead', lead_type='TRIAL', id=t.id) }}" data-name="Free Trial for {{ t.name }}">
+            <button class="btn btn-outline-rose btn-sm btn-delete-trigger" data-action="{{ url_for('admin.delete_lead', lead_type='TRIAL', id=t.id) }}" data-name="Free Trial for {{ t.name }}">
               <i class="bi bi-trash"></i>
             </button>
           </td>
@@ -105,21 +105,21 @@
         {% set note_key = "CONSULTATION_" ~ c.id %}
         {% set current_notes = notes_by_lead.get(note_key, []) %}
         <tr>
-          <td><span class="badge bg-warning bg-opacity-25 text-warning border border-warning border-opacity-25"><i class="bi bi-person-check-fill me-1"></i> CONSULTATION</span></td>
+          <td><span class="badge badge-brown"><i class="bi bi-person-check-fill me-1"></i> CONSULTATION</span></td>
           <td>
             <strong class="text-white d-block">{{ c.name }}</strong>
             <small class="text-muted"><i class="bi bi-envelope"></i> {{ c.email }}</small><br>
             <small class="text-secondary"><i class="bi bi-telephone"></i> {{ c.phone }}</small>
           </td>
           <td>
-            <div class="small text-white"><strong>Coach:</strong> {{ c.trainer.name if c.trainer else 'Any' }}</div>
+            <div class="small text-white"><strong>Coach:</strong> {{ c.trainer.name if c.trainer else 'Any Coach' }}</div>
             <div class="small text-muted"><i class="bi bi-calendar"></i> {{ c.preferred_date }} at {{ c.preferred_time }}</div>
             <div class="small text-secondary"><strong>Goal:</strong> {{ c.goal }} ({{ c.fitness_level }})</div>
           </td>
           <td>
             <form method="POST" action="{{ url_for('admin.update_lead_status', lead_type='CONSULTATION', id=c.id) }}">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-              <select name="status" class="form-select form-select-sm bg-dark border-secondary border-opacity-25 text-white" style="font-size: 0.78rem;" onchange="this.form.submit()">
+              <select name="status" class="form-select form-select-sm" style="font-size: 0.78rem;" onchange="this.form.submit()">
                 <option value="PENDING" {% if c.status == 'PENDING' %}selected{% endif %}>PENDING</option>
                 <option value="CONTACTED" {% if c.status == 'CONTACTED' %}selected{% endif %}>CONTACTED</option>
                 <option value="CONFIRMED" {% if c.status == 'CONFIRMED' %}selected{% endif %}>CONFIRMED</option>
@@ -129,7 +129,7 @@
             </form>
           </td>
           <td>
-            <button class="btn btn-outline-secondary btn-sm btn-notes-trigger"
+            <button class="btn btn-outline-bronze btn-sm btn-notes-trigger"
                     data-type="CONSULTATION"
                     data-id="{{ c.id }}"
                     data-name="{{ c.name }}"
@@ -138,7 +138,7 @@
             </button>
           </td>
           <td class="text-end">
-            <button class="btn btn-outline-danger btn-sm btn-delete-trigger" data-action="{{ url_for('admin.delete_lead', lead_type='CONSULTATION', id=c.id) }}" data-name="Consultation for {{ c.name }}">
+            <button class="btn btn-outline-rose btn-sm btn-delete-trigger" data-action="{{ url_for('admin.delete_lead', lead_type='CONSULTATION', id=c.id) }}" data-name="Consultation for {{ c.name }}">
               <i class="bi bi-trash"></i>
             </button>
           </td>
@@ -150,7 +150,7 @@
         {% set note_key = "ENQUIRY_" ~ e.id %}
         {% set current_notes = notes_by_lead.get(note_key, []) %}
         <tr>
-          <td><span class="badge bg-info bg-opacity-25 text-info border border-info border-opacity-25"><i class="bi bi-envelope-fill me-1"></i> ENQUIRY</span></td>
+          <td><span class="badge badge-pink"><i class="bi bi-envelope-fill me-1"></i> ENQUIRY</span></td>
           <td>
             <strong class="text-white d-block">{{ e.name }}</strong>
             <small class="text-muted"><i class="bi bi-envelope"></i> {{ e.email }}</small><br>
@@ -163,7 +163,7 @@
           <td>
             <form method="POST" action="{{ url_for('admin.update_lead_status', lead_type='ENQUIRY', id=e.id) }}">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-              <select name="status" class="form-select form-select-sm bg-dark border-secondary border-opacity-25 text-white" style="font-size: 0.78rem;" onchange="this.form.submit()">
+              <select name="status" class="form-select form-select-sm" style="font-size: 0.78rem;" onchange="this.form.submit()">
                 <option value="NEW" {% if e.status == 'NEW' %}selected{% endif %}>NEW</option>
                 <option value="CONTACTED" {% if e.status == 'CONTACTED' %}selected{% endif %}>CONTACTED</option>
                 <option value="RESOLVED" {% if e.status == 'RESOLVED' %}selected{% endif %}>RESOLVED</option>
@@ -172,7 +172,7 @@
             </form>
           </td>
           <td>
-            <button class="btn btn-outline-secondary btn-sm btn-notes-trigger"
+            <button class="btn btn-outline-bronze btn-sm btn-notes-trigger"
                     data-type="ENQUIRY"
                     data-id="{{ e.id }}"
                     data-name="{{ e.name }}"
@@ -181,7 +181,7 @@
             </button>
           </td>
           <td class="text-end">
-            <button class="btn btn-outline-danger btn-sm btn-delete-trigger" data-action="{{ url_for('admin.delete_lead', lead_type='ENQUIRY', id=e.id) }}" data-name="Enquiry from {{ e.name }}">
+            <button class="btn btn-outline-rose btn-sm btn-delete-trigger" data-action="{{ url_for('admin.delete_lead', lead_type='ENQUIRY', id=e.id) }}" data-name="Enquiry from {{ e.name }}">
               <i class="bi bi-trash"></i>
             </button>
           </td>
@@ -214,10 +214,10 @@
         <form id="leadNoteForm" method="POST" action="">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
           <div class="mb-2">
-            <label class="form-label text-secondary small text-uppercase fw-bold">Add Internal Follow-Up Note</label>
-            {{ note_form.note(class="form-control bg-dark border-secondary border-opacity-25 text-white", rows=3, placeholder="e.g. Called client. Booked consultation for Thursday at 6PM.") }}
+            <label class="form-label">Add Internal Follow-Up Note</label>
+            {{ note_form.note(class="form-control", rows=3, placeholder="e.g. Called client. Booked free trial session for Friday 6PM.") }}
           </div>
-          {{ note_form.submit(class="btn btn-danger btn-sm w-100") }}
+          {{ note_form.submit(class="btn btn-primary-admin w-100") }}
         </form>
       </div>
     </div>

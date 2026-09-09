@@ -7,81 +7,84 @@
   <!-- Trainer Form -->
   <div class="col-lg-5">
     <div class="admin-table-card p-4">
-      <h6 class="fw-bold text-white mb-3">
+      <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom border-secondary border-opacity-25">
+        <h6 class="fw-bold text-white mb-0">
+          {% if action == 'edit' %}
+          <i class="bi bi-pencil-square me-2" style="color: var(--admin-brown-light);"></i> Edit Coach: {{ editing_trainer.name }}
+          {% else %}
+          <i class="bi bi-person-plus-fill me-2" style="color: var(--admin-pink-rose);"></i> Add New Coach to Roster
+          {% endif %}
+        </h6>
         {% if action == 'edit' %}
-        <i class="bi bi-pencil-square text-warning me-2"></i> Edit Coach: {{ editing_trainer.name }}
-        {% else %}
-        <i class="bi bi-person-plus-fill text-accent me-2"></i> Add New Coach to Roster
+        <a href="{{ url_for('admin.trainers') }}" class="btn-outline-rose btn btn-sm py-1 px-2" style="font-size: 0.72rem;">+ New</a>
         {% endif %}
-      </h6>
+      </div>
 
       {% if form %}
-      <form method="POST" action="" novalidate>
+      <form method="POST" action="{% if action == 'edit' %}{{ url_for('admin.edit_trainer', id=editing_trainer.id) }}{% else %}{{ url_for('admin.create_trainer') }}{% endif %}" novalidate>
         {{ form.hidden_tag() }}
 
         <div class="row g-2 mb-3">
           <div class="col-6">
-            <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.name.label.text }} *</label>
-            {{ form.name(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="Marcus Vance") }}
+            <label class="form-label">{{ form.name.label.text }} *</label>
+            {{ form.name(class="form-control", placeholder="Coach Marcus") }}
           </div>
           <div class="col-6">
-            <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.slug.label.text }} *</label>
-            {{ form.slug(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="marcus-vance") }}
+            <label class="form-label">{{ form.slug.label.text }} *</label>
+            {{ form.slug(class="form-control", placeholder="coach-marcus") }}
           </div>
         </div>
 
         <div class="row g-2 mb-3">
           <div class="col-6">
-            <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.specialization.label.text }} *</label>
-            {{ form.specialization(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="Powerlifting & Hypertrophy") }}
+            <label class="form-label">{{ form.specialization.label.text }} *</label>
+            {{ form.specialization(class="form-control", placeholder="Hypertrophy & Strength") }}
           </div>
           <div class="col-6">
-            <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.experience.label.text }}</label>
-            {{ form.experience(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="8+ Years") }}
+            <label class="form-label">{{ form.experience.label.text }}</label>
+            {{ form.experience(class="form-control", placeholder="8+ Years") }}
           </div>
         </div>
 
         <div class="mb-3">
-          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.image_url.label.text }} *</label>
-          {{ form.image_url(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="https://images.unsplash.com/...") }}
+          <label class="form-label">{{ form.image_url.label.text }} *</label>
+          {{ form.image_url(class="form-control", placeholder="https://images.unsplash.com/...") }}
         </div>
 
         <div class="mb-3">
-          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.instagram_url.label.text }}</label>
-          {{ form.instagram_url(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="https://instagram.com/marcus_lift") }}
+          <label class="form-label">{{ form.instagram_url.label.text }}</label>
+          {{ form.instagram_url(class="form-control", placeholder="https://instagram.com/coach_marcus") }}
         </div>
 
         <div class="mb-3">
-          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.certifications.label.text }}</label>
-          {{ form.certifications(class="form-control bg-dark border-secondary border-opacity-25 text-white", rows=3, placeholder="CSCS Certified Strength Specialist&#10;USAW Level 2 Coach") }}
+          <label class="form-label">{{ form.certifications.label.text }}</label>
+          {{ form.certifications(class="form-control", rows=2, placeholder="CSCS Certified Strength Specialist, Olympic Lifting Level 2") }}
         </div>
 
         <div class="mb-3">
-          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.bio.label.text }}</label>
-          {{ form.bio(class="form-control bg-dark border-secondary border-opacity-25 text-white", rows=3, placeholder="Coach bio & background...") }}
+          <label class="form-label">{{ form.bio.label.text }}</label>
+          {{ form.bio(class="form-control", rows=3, placeholder="Coach philosophy, background, track record...") }}
         </div>
 
-        <div class="form-check form-switch mb-2">
-          {{ form.is_featured(class="form-check-input") }}
-          <label class="form-check-label text-white small" for="{{ form.is_featured.id }}">{{ form.is_featured.label.text }}</label>
-        </div>
+        <div class="d-flex gap-4 mb-4">
+          <div class="form-check form-switch">
+            {{ form.is_featured(class="form-check-input") }}
+            <label class="form-check-label" for="{{ form.is_featured.id }}">{{ form.is_featured.label.text }}</label>
+          </div>
 
-        <div class="form-check form-switch mb-4">
-          {{ form.is_active(class="form-check-input") }}
-          <label class="form-check-label text-white small" for="{{ form.is_active.id }}">{{ form.is_active.label.text }}</label>
+          <div class="form-check form-switch">
+            {{ form.is_active(class="form-check-input") }}
+            <label class="form-check-label" for="{{ form.is_active.id }}">{{ form.is_active.label.text }}</label>
+          </div>
         </div>
 
         <div class="d-flex gap-2">
-          {{ form.submit(class="btn btn-danger btn-sm w-100 py-2") }}
+          {{ form.submit(class="btn btn-primary-admin w-100 py-2") }}
           {% if action == 'edit' %}
-          <a href="{{ url_for('admin.trainers') }}" class="btn btn-secondary btn-sm">Cancel</a>
+          <a href="{{ url_for('admin.trainers') }}" class="btn btn-outline-bronze">Cancel</a>
           {% endif %}
         </div>
       </form>
-      {% else %}
-      <a href="{{ url_for('admin.create_trainer') }}" class="btn btn-primary-glow btn-sm w-100">
-        <i class="bi bi-person-plus"></i> Add New Coach
-      </a>
       {% endif %}
     </div>
   </div>
@@ -90,9 +93,9 @@
   <div class="col-lg-7">
     <div class="admin-table-card">
       <div class="admin-table-header">
-        <h6 class="mb-0 fw-bold text-white"><i class="bi bi-people-fill text-accent me-2"></i> Current Roster ({{ trainers|length }})</h6>
-        {% if action != 'create' %}
-        <a href="{{ url_for('admin.create_trainer') }}" class="btn btn-danger btn-sm">
+        <h6 class="mb-0 fw-bold text-white"><i class="bi bi-people-fill me-2" style="color: var(--admin-brown-bronze);"></i> Current Coaching Roster ({{ trainers|length }})</h6>
+        {% if action == 'edit' %}
+        <a href="{{ url_for('admin.create_trainer') }}" class="btn btn-primary-admin btn-sm">
           <i class="bi bi-plus-lg me-1"></i> Add Coach
         </a>
         {% endif %}
@@ -114,32 +117,32 @@
             <tr>
               <td>
                 <div class="d-flex align-items-center gap-2">
-                  <img src="{{ t.image_url }}" alt="{{ t.name }}" class="rounded-circle" style="width: 38px; height: 38px; object-fit: cover;">
+                  <img src="{{ t.image_url }}" alt="{{ t.name }}" class="rounded-circle" style="width: 38px; height: 38px; object-fit: cover; border: 2px solid var(--admin-brown-border);" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop';">
                   <div>
                     <strong class="text-white d-block">{{ t.name }}</strong>
-                    {% if t.is_featured %}<span class="badge bg-danger" style="font-size: 0.65rem;">FEATURED</span>{% endif %}
+                    {% if t.is_featured %}<span class="badge badge-pink" style="font-size: 0.65rem;">FEATURED</span>{% endif %}
                   </div>
                 </div>
               </td>
               <td><span class="text-secondary small">{{ t.specialization }}</span></td>
-              <td><span class="badge bg-dark border border-secondary border-opacity-25 text-white">{{ t.experience or 'Coach' }}</span></td>
+              <td><span class="badge badge-brown">{{ t.experience or 'Pro Coach' }}</span></td>
               <td>
-                <span class="badge-status {% if t.is_active %}status-confirmed{% else %}status-cancelled{% endif %}">
+                <span class="badge-status {% if t.is_active %}status-active{% else %}status-inactive{% endif %}">
                   {{ 'ACTIVE' if t.is_active else 'INACTIVE' }}
                 </span>
               </td>
               <td class="text-end">
-                <a href="{{ url_for('admin.edit_trainer', id=t.id) }}" class="btn btn-outline-warning btn-sm me-1" title="Edit Coach">
-                  <i class="bi bi-pencil"></i>
+                <a href="{{ url_for('admin.edit_trainer', id=t.id) }}" class="btn btn-outline-bronze btn-sm p-1 px-2 me-1" title="Edit Coach">
+                  <i class="bi bi-pencil" style="font-size: 0.8rem;"></i>
                 </a>
-                <button class="btn btn-outline-danger btn-sm btn-delete-trigger" data-action="{{ url_for('admin.delete_trainer', id=t.id) }}" data-name="Coach {{ t.name }}">
-                  <i class="bi bi-trash"></i>
+                <button class="btn btn-outline-rose btn-sm p-1 px-2 btn-delete-trigger" data-action="{{ url_for('admin.delete_trainer', id=t.id) }}" data-name="Coach {{ t.name }}" title="Delete Coach">
+                  <i class="bi bi-trash" style="font-size: 0.8rem;"></i>
                 </button>
               </td>
             </tr>
             {% else %}
             <tr>
-              <td colspan="5" class="text-center text-muted py-5">No trainers added to the roster yet.</td>
+              <td colspan="5" class="text-center text-muted py-5">No coaches registered in the roster yet.</td>
             </tr>
             {% endfor %}
           </tbody>

@@ -4,91 +4,94 @@
 
 {% block content %}
 <div class="row g-4">
-  <!-- Reel Form -->
+  <!-- Reel Form (Left Column) -->
   <div class="col-lg-5">
     <div class="admin-table-card p-4">
-      <h6 class="fw-bold text-white mb-3">
+      <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom border-secondary border-opacity-25">
+        <h6 class="fw-bold text-white mb-0">
+          {% if action == 'edit' %}
+          <i class="bi bi-pencil-square me-2" style="color: var(--admin-brown-light);"></i> Edit Reel: {{ editing_reel.title }}
+          {% else %}
+          <i class="bi bi-camera-reels-fill me-2" style="color: var(--admin-pink-rose);"></i> Add New Instagram Reel (9:16)
+          {% endif %}
+        </h6>
         {% if action == 'edit' %}
-        <i class="bi bi-pencil-square text-warning me-2"></i> Edit Reel: {{ editing_reel.title }}
-        {% else %}
-        <i class="bi bi-camera-reels-fill text-accent me-2"></i> Add New Instagram Reel (9:16)
+        <a href="{{ url_for('admin.instagram') }}" class="btn-outline-rose btn btn-sm py-1 px-2" style="font-size: 0.72rem;">+ New</a>
         {% endif %}
-      </h6>
+      </div>
 
       {% if form %}
-      <form method="POST" action="" novalidate>
+      <form method="POST" action="{% if action == 'edit' %}{{ url_for('admin.edit_reel', id=editing_reel.id) }}{% else %}{{ url_for('admin.create_reel') }}{% endif %}" novalidate>
         {{ form.hidden_tag() }}
 
         <div class="mb-3">
-          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.title.label.text }} *</label>
-          {{ form.title(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="Bench Press Bar Path Tips") }}
+          <label class="form-label">{{ form.title.label.text }} *</label>
+          {{ form.title(class="form-control", placeholder="e.g. Explosive Dumbbell Snatch Form") }}
         </div>
 
         <div class="row g-2 mb-3">
           <div class="col-6">
-            <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.display_order.label.text }} *</label>
-            {{ form.display_order(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="1") }}
+            <label class="form-label">{{ form.display_order.label.text }} *</label>
+            {{ form.display_order(class="form-control", placeholder="1") }}
           </div>
           <div class="col-6">
-            <label class="form-label text-secondary small text-uppercase fw-bold">Aspect Ratio</label>
-            <input type="text" class="form-control bg-dark border-secondary border-opacity-25 text-muted" value="9:16 Vertical" disabled>
+            <label class="form-label">Format / Ratio</label>
+            <input type="text" class="form-control" value="9:16 Vertical" disabled style="opacity: 0.75; cursor: not-allowed;">
           </div>
         </div>
 
         <div class="mb-3">
-          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.thumbnail_url.label.text }} *</label>
-          {{ form.thumbnail_url(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="https://images.unsplash.com/...") }}
-          <small class="text-muted" style="font-size: 0.72rem;">Vertical portrait image recommended.</small>
+          <label class="form-label">{{ form.thumbnail_url.label.text }} *</label>
+          {{ form.thumbnail_url(class="form-control", placeholder="https://images.unsplash.com/...") }}
+          <small class="text-muted d-block mt-1" style="font-size: 0.72rem; color: var(--admin-text-muted) !important;">High quality vertical portrait image URL.</small>
         </div>
 
         <div class="mb-3">
-          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.instagram_url.label.text }}</label>
-          {{ form.instagram_url(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="https://www.instagram.com/reel/Cxxxxxx/") }}
+          <label class="form-label">{{ form.instagram_url.label.text }}</label>
+          {{ form.instagram_url(class="form-control", placeholder="https://www.instagram.com/reel/Cxxxxxx/") }}
         </div>
 
         <div class="mb-3">
-          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.video_url.label.text }}</label>
-          {{ form.video_url(class="form-control bg-dark border-secondary border-opacity-25 text-white", placeholder="https://cdn.example.com/demo.mp4") }}
-          <small class="text-muted" style="font-size: 0.72rem;">Optional direct MP4 link for interactive in-site modal video playback.</small>
+          <label class="form-label">{{ form.video_url.label.text }}</label>
+          {{ form.video_url(class="form-control", placeholder="https://cdn.example.com/reel-clip.mp4") }}
+          <small class="text-muted d-block mt-1" style="font-size: 0.72rem; color: var(--admin-text-muted) !important;">Optional direct MP4 link for interactive in-site modal popup playback.</small>
         </div>
 
         <div class="mb-3">
-          <label class="form-label text-secondary small text-uppercase fw-bold">{{ form.caption.label.text }}</label>
-          {{ form.caption(class="form-control bg-dark border-secondary border-opacity-25 text-white", rows=2, placeholder="Short reel caption / hashtags...") }}
+          <label class="form-label">{{ form.caption.label.text }}</label>
+          {{ form.caption(class="form-control", rows=2, placeholder="Reel caption, athlete tags, tips...") }}
         </div>
 
-        <div class="form-check form-switch mb-2">
-          {{ form.is_featured(class="form-check-input") }}
-          <label class="form-check-label text-white small" for="{{ form.is_featured.id }}">{{ form.is_featured.label.text }}</label>
-        </div>
+        <div class="d-flex gap-4 mb-4">
+          <div class="form-check form-switch">
+            {{ form.is_featured(class="form-check-input") }}
+            <label class="form-check-label" for="{{ form.is_featured.id }}">{{ form.is_featured.label.text }}</label>
+          </div>
 
-        <div class="form-check form-switch mb-4">
-          {{ form.is_active(class="form-check-input") }}
-          <label class="form-check-label text-white small" for="{{ form.is_active.id }}">{{ form.is_active.label.text }}</label>
+          <div class="form-check form-switch">
+            {{ form.is_active(class="form-check-input") }}
+            <label class="form-check-label" for="{{ form.is_active.id }}">{{ form.is_active.label.text }}</label>
+          </div>
         </div>
 
         <div class="d-flex gap-2">
-          {{ form.submit(class="btn btn-danger btn-sm w-100 py-2") }}
+          {{ form.submit(class="btn btn-primary-admin w-100 py-2") }}
           {% if action == 'edit' %}
-          <a href="{{ url_for('admin.instagram') }}" class="btn btn-secondary btn-sm">Cancel</a>
+          <a href="{{ url_for('admin.instagram') }}" class="btn btn-outline-bronze">Cancel</a>
           {% endif %}
         </div>
       </form>
-      {% else %}
-      <a href="{{ url_for('admin.create_reel') }}" class="btn btn-primary-glow btn-sm w-100">
-        <i class="bi bi-camera-reels"></i> Add Instagram Reel
-      </a>
       {% endif %}
     </div>
   </div>
 
-  <!-- Reels Showcase Grid -->
+  <!-- Reels Showcase Grid (Right Column) -->
   <div class="col-lg-7">
     <div class="admin-table-card">
       <div class="admin-table-header">
-        <h6 class="mb-0 fw-bold text-white"><i class="bi bi-instagram text-accent me-2"></i> Active Reels ({{ reels|length }})</h6>
-        {% if action != 'create' %}
-        <a href="{{ url_for('admin.create_reel') }}" class="btn btn-danger btn-sm">
+        <h6 class="mb-0 fw-bold text-white"><i class="bi bi-instagram me-2" style="color: var(--admin-pink-rose);"></i> Active Reels Showcase ({{ reels|length }})</h6>
+        {% if action == 'edit' %}
+        <a href="{{ url_for('admin.create_reel') }}" class="btn btn-primary-admin btn-sm">
           <i class="bi bi-plus-lg me-1"></i> New Reel
         </a>
         {% endif %}
@@ -98,32 +101,32 @@
         <div class="row g-3">
           {% for r in reels %}
           <div class="col-md-4 col-6">
-            <div class="p-2 rounded-3 bg-dark border border-secondary border-opacity-25 h-100 d-flex flex-direction-column justify-content-between">
-              <div class="position-relative rounded-3 overflow-hidden mb-2" style="aspect-ratio: 9/16; background: #000;">
-                <img src="{{ r.thumbnail_url }}" alt="{{ r.title }}" class="w-100 h-100 object-fit-cover">
-                <span class="badge bg-dark bg-opacity-75 position-absolute top-0 start-0 m-2 text-white" style="font-size: 0.65rem;">
+            <div class="admin-reel-card">
+              <div class="reel-aspect-container">
+                <img src="{{ r.thumbnail_url }}" alt="{{ r.title }}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500&auto=format&fit=crop';" loading="lazy">
+                <span class="reel-order-badge">
                   #{{ r.display_order }}
                 </span>
                 {% if r.video_url %}
-                <span class="badge bg-danger position-absolute top-0 end-0 m-2" style="font-size: 0.65rem;">
+                <span class="reel-mp4-badge">
                   <i class="bi bi-play-fill"></i> MP4
                 </span>
                 {% endif %}
               </div>
 
               <div>
-                <h6 class="text-white small fw-bold mb-1 text-truncate">{{ r.title }}</h6>
-                <p class="text-muted mb-2 text-truncate" style="font-size: 0.72rem;">{{ r.caption or 'No caption' }}</p>
+                <h6 class="text-white small fw-bold mb-1 text-truncate" title="{{ r.title }}">{{ r.title }}</h6>
+                <p class="mb-2 text-truncate" style="font-size: 0.72rem; color: var(--admin-text-muted);">{{ r.caption or 'Published Reel Showcase' }}</p>
 
                 <div class="d-flex justify-content-between align-items-center pt-2 border-top border-secondary border-opacity-25">
-                  <span class="badge-status {% if r.is_active %}status-confirmed{% else %}status-cancelled{% endif %}" style="font-size: 0.65rem;">
+                  <span class="badge-status {% if r.is_active %}status-live{% else %}status-hidden{% endif %}">
                     {{ 'LIVE' if r.is_active else 'HIDDEN' }}
                   </span>
                   <div class="d-flex gap-1">
-                    <a href="{{ url_for('admin.edit_reel', id=r.id) }}" class="btn btn-outline-warning btn-sm p-1 px-2" title="Edit Reel">
+                    <a href="{{ url_for('admin.edit_reel', id=r.id) }}" class="btn btn-outline-bronze btn-sm p-1 px-2" title="Edit Reel">
                       <i class="bi bi-pencil" style="font-size: 0.75rem;"></i>
                     </a>
-                    <button class="btn btn-outline-danger btn-sm p-1 px-2 btn-delete-trigger" data-action="{{ url_for('admin.delete_reel', id=r.id) }}" data-name="Reel: {{ r.title }}">
+                    <button class="btn btn-outline-rose btn-sm p-1 px-2 btn-delete-trigger" data-action="{{ url_for('admin.delete_reel', id=r.id) }}" data-name="Reel: {{ r.title }}" title="Delete Reel">
                       <i class="bi bi-trash" style="font-size: 0.75rem;"></i>
                     </button>
                   </div>
@@ -132,7 +135,10 @@
             </div>
           </div>
           {% else %}
-          <div class="col-12 text-center text-muted py-5">No Instagram reels published yet.</div>
+          <div class="col-12 text-center text-muted py-5">
+            <i class="bi bi-camera-reels fs-1 d-block mb-2 text-secondary opacity-50"></i>
+            No Instagram reels published yet. Add your first reel using the form on the left.
+          </div>
           {% endfor %}
         </div>
       </div>

@@ -6,52 +6,52 @@
 <!-- Top KPI Cards Grid -->
 <div class="row g-3 mb-4">
   <div class="col-xl-3 col-sm-6">
-    <div class="kpi-card">
+    <div class="kpi-card kpi-pink">
       <div>
         <div class="kpi-label">TOTAL LEADS</div>
-        <div class="kpi-value text-white">{{ total_leads }}</div>
-        <small class="text-accent fw-bold"><i class="bi bi-arrow-up-right"></i> All Channels</small>
+        <div class="kpi-value">{{ total_leads }}</div>
+        <small class="text-pink fw-bold" style="color: var(--admin-pink-rose);"><i class="bi bi-arrow-up-right"></i> All Channels</small>
       </div>
-      <div class="kpi-icon bg-primary bg-opacity-25 text-primary">
+      <div class="kpi-icon">
         <i class="bi bi-funnel-fill"></i>
       </div>
     </div>
   </div>
 
   <div class="col-xl-3 col-sm-6">
-    <div class="kpi-card">
+    <div class="kpi-card kpi-brown">
       <div>
         <div class="kpi-label">ACTION REQUIRED</div>
-        <div class="kpi-value text-warning">{{ new_leads }}</div>
-        <small class="text-muted">Unprocessed Inquiries</small>
+        <div class="kpi-value">{{ new_leads }}</div>
+        <small style="color: var(--admin-brown-light); font-size: 0.78rem;">Unprocessed Inquiries</small>
       </div>
-      <div class="kpi-icon bg-warning bg-opacity-25 text-warning">
+      <div class="kpi-icon">
         <i class="bi bi-bell-fill"></i>
       </div>
     </div>
   </div>
 
   <div class="col-xl-3 col-sm-6">
-    <div class="kpi-card">
+    <div class="kpi-card kpi-red">
       <div>
         <div class="kpi-label">FREE TRIALS</div>
-        <div class="kpi-value text-white">{{ trial_count }}</div>
-        <small class="text-info fw-bold">{{ new_trials }} New Requests</small>
+        <div class="kpi-value">{{ trial_count }}</div>
+        <small style="color: #FF758F; font-weight: 700; font-size: 0.78rem;">{{ new_trials }} New Requests</small>
       </div>
-      <div class="kpi-icon bg-info bg-opacity-25 text-info">
+      <div class="kpi-icon">
         <i class="bi bi-fire"></i>
       </div>
     </div>
   </div>
 
   <div class="col-xl-3 col-sm-6">
-    <div class="kpi-card">
+    <div class="kpi-card kpi-green">
       <div>
-        <div class="kpi-label">PENDING SESSIONS</div>
-        <div class="kpi-value text-accent">{{ pending_appointments }}</div>
-        <small class="text-muted">{{ confirmed_appointments }} Confirmed</small>
+        <div class="kpi-label">CONFIRMED / SESSIONS</div>
+        <div class="kpi-value">{{ confirmed_appointments }}</div>
+        <small style="color: var(--admin-green-mint); font-weight: 700; font-size: 0.78rem;">{{ pending_appointments }} Pending Review</small>
       </div>
-      <div class="kpi-icon bg-danger bg-opacity-25 text-danger">
+      <div class="kpi-icon">
         <i class="bi bi-calendar2-check-fill"></i>
       </div>
     </div>
@@ -61,55 +61,55 @@
 <!-- Secondary Stats Bar -->
 <div class="row g-3 mb-4">
   <div class="col-md-3 col-6">
-    <div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+    <div class="p-3 rounded-3 admin-box-card d-flex justify-content-between align-items-center">
       <div>
         <span class="text-muted small">Roster Coaches</span>
         <h5 class="mb-0 text-white fw-bold">{{ trainer_count }} Active</h5>
       </div>
-      <a href="{{ url_for('admin.trainers') }}" class="text-accent small fw-bold">Manage <i class="bi bi-chevron-right"></i></a>
+      <a href="{{ url_for('admin.trainers') }}" class="btn-outline-bronze btn btn-sm py-1 px-2" style="font-size: 0.75rem;">Manage <i class="bi bi-chevron-right"></i></a>
     </div>
   </div>
 
   <div class="col-md-3 col-6">
-    <div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+    <div class="p-3 rounded-3 admin-box-card d-flex justify-content-between align-items-center">
       <div>
         <span class="text-muted small">Membership Plans</span>
         <h5 class="mb-0 text-white fw-bold">{{ plan_count }} Published</h5>
       </div>
-      <a href="{{ url_for('admin.memberships') }}" class="text-accent small fw-bold">Manage <i class="bi bi-chevron-right"></i></a>
+      <a href="{{ url_for('admin.memberships') }}" class="btn-outline-bronze btn btn-sm py-1 px-2" style="font-size: 0.75rem;">Manage <i class="bi bi-chevron-right"></i></a>
     </div>
   </div>
 
   <div class="col-md-3 col-6">
-    <div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+    <div class="p-3 rounded-3 admin-box-card d-flex justify-content-between align-items-center">
       <div>
         <span class="text-muted small">Timetable Classes</span>
         <h5 class="mb-0 text-white fw-bold">{{ class_count }} Scheduled</h5>
       </div>
-      <a href="{{ url_for('admin.classes') }}" class="text-accent small fw-bold">Manage <i class="bi bi-chevron-right"></i></a>
+      <a href="{{ url_for('admin.classes') }}" class="btn-outline-bronze btn btn-sm py-1 px-2" style="font-size: 0.75rem;">Manage <i class="bi bi-chevron-right"></i></a>
     </div>
   </div>
 
   <div class="col-md-3 col-6">
-    <div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+    <div class="p-3 rounded-3 admin-box-card d-flex justify-content-between align-items-center">
       <div>
         <span class="text-muted small">Instagram Reels</span>
         <h5 class="mb-0 text-white fw-bold">{{ reels_count }} Live</h5>
       </div>
-      <a href="{{ url_for('admin.instagram') }}" class="text-accent small fw-bold">Manage <i class="bi bi-chevron-right"></i></a>
+      <a href="{{ url_for('admin.instagram') }}" class="btn-outline-bronze btn btn-sm py-1 px-2" style="font-size: 0.75rem;">Manage <i class="bi bi-chevron-right"></i></a>
     </div>
   </div>
 </div>
 
 <!-- Quick Action Shortcuts -->
-<div class="p-3 rounded-3 bg-dark border border-secondary border-opacity-25 mb-4 d-flex flex-wrap gap-2 align-items-center justify-content-between">
-  <div class="fw-bold text-white small text-uppercase"><i class="bi bi-lightning-fill text-warning me-1"></i> Quick Shortcuts:</div>
+<div class="p-3 rounded-3 admin-box-card mb-4 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+  <div class="fw-bold text-white small text-uppercase"><i class="bi bi-lightning-fill text-warning me-1"></i> Quick Action Tools:</div>
   <div class="d-flex flex-wrap gap-2">
-    <a href="{{ url_for('admin.leads') }}" class="btn btn-outline-light btn-sm"><i class="bi bi-funnel me-1"></i> View Lead Pipeline</a>
-    <a href="{{ url_for('admin.create_membership') }}" class="btn btn-outline-light btn-sm"><i class="bi bi-plus-circle me-1"></i> Add Plan</a>
-    <a href="{{ url_for('admin.create_trainer') }}" class="btn btn-outline-light btn-sm"><i class="bi bi-person-plus me-1"></i> Add Trainer</a>
-    <a href="{{ url_for('admin.create_class') }}" class="btn btn-outline-light btn-sm"><i class="bi bi-calendar-plus me-1"></i> Add Class</a>
-    <a href="{{ url_for('admin.create_reel') }}" class="btn btn-outline-light btn-sm"><i class="bi bi-camera-reels me-1"></i> Add Reel</a>
+    <a href="{{ url_for('admin.leads') }}" class="btn btn-outline-rose btn-sm"><i class="bi bi-funnel me-1"></i> View Lead Pipeline</a>
+    <a href="{{ url_for('admin.create_membership') }}" class="btn btn-outline-bronze btn-sm"><i class="bi bi-plus-circle me-1"></i> Add Plan</a>
+    <a href="{{ url_for('admin.create_trainer') }}" class="btn btn-outline-bronze btn-sm"><i class="bi bi-person-plus me-1"></i> Add Trainer</a>
+    <a href="{{ url_for('admin.create_class') }}" class="btn btn-outline-emerald btn-sm"><i class="bi bi-calendar-plus me-1"></i> Add Class</a>
+    <a href="{{ url_for('admin.create_reel') }}" class="btn btn-outline-rose btn-sm"><i class="bi bi-camera-reels me-1"></i> Add Reel</a>
   </div>
 </div>
 
